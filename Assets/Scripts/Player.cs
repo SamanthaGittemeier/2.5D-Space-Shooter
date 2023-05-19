@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    public float Speed = 3.5f;
+    public float Speed = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Player Input
         if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(Vector3.left * Speed * Time.deltaTime);
@@ -32,6 +33,27 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(Vector3.down * Speed * Time.deltaTime);
+        }
+
+        //Player Bounds
+        if (transform.position.y <= -4.93f)
+        {
+            transform.position = new Vector3(transform.position.x, 6.98f, 0);
+        }
+
+        else if(transform.position.y >= 6.99f)
+        {
+            transform.position = new Vector3(transform.position.x, -4.92f, 0);
+        }
+
+        if (transform.position.x >= 10.37f)
+        {
+            transform.position = new Vector3(-10.37f, transform.position.y, 0);
+        }
+
+        else if (transform.position.x <= -10.38f)
+        {
+            transform.position = new Vector3(10.36f, transform.position.y, 0);
         }
     }
 }
