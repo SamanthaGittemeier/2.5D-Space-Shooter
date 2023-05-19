@@ -17,6 +17,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        PlayerMovement();
+        PlayerBounds();
+    }
+
+    void PlayerMovement()
+    {
         //Player Input
         if (Input.GetKey(KeyCode.A))
         {
@@ -34,14 +40,17 @@ public class Player : MonoBehaviour
         {
             transform.Translate(Vector3.down * Speed * Time.deltaTime);
         }
+    }
 
+    void PlayerBounds()
+    {
         //Player Bounds
         if (transform.position.y <= -4.93f)
         {
             transform.position = new Vector3(transform.position.x, 6.98f, 0);
         }
 
-        else if(transform.position.y >= 6.99f)
+        else if (transform.position.y >= 6.99f)
         {
             transform.position = new Vector3(transform.position.x, -4.92f, 0);
         }
