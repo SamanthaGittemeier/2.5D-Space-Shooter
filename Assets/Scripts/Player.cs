@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //take player current position = 0, 0, 0
         transform.position = new Vector3(0, 0, 0);
     }
 
@@ -26,7 +25,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(LaserPrefab, transform.position, Quaternion.identity);
+            Instantiate(LaserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
             Debug.Log ("Space was pressed");
         }
     }
