@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     public float Speed = 5f;
     public GameObject LaserPrefab;
+    private float FireRate = 0.25f;
+    private float CanFire = -1f;
 
     // Start is called before the first frame update
     void Start()
@@ -23,8 +25,9 @@ public class Player : MonoBehaviour
 
     void ShootLaser()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > CanFire)
         {
+            CanFire = Time.time + FireRate;
             Instantiate(LaserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
             Debug.Log ("Space was pressed");
         }
