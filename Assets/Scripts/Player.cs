@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     public float Speed = 5f;
+    public GameObject LaserPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +19,16 @@ public class Player : MonoBehaviour
     {
         PlayerMovement();
         PlayerBounds();
+        ShootLaser();
+    }
+
+    void ShootLaser()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(LaserPrefab, transform.position, Quaternion.identity);
+            Debug.Log ("Space was pressed");
+        }
     }
 
     void PlayerMovement()
