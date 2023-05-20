@@ -413,6 +413,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 893772834724025576, guid: a6f09e5e04d790a4690a24e1ea151214,
+        type: 3}
+      propertyPath: PowerUpPrefab
+      value: 
+      objectReference: {fileID: 7693344730348373245, guid: 7bf06bc0451914342b8498adf16ae757,
+        type: 3}
     - target: {fileID: 7753358588269737716, guid: a6f09e5e04d790a4690a24e1ea151214,
         type: 3}
       propertyPath: m_Name
