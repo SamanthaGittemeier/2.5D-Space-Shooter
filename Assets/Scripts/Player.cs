@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public GameObject LaserPrefab;
     private float FireRate = 0.25f;
     private float CanFire = -1f;
+    public float Lives = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,16 @@ public class Player : MonoBehaviour
         PlayerMovement();
         PlayerBounds();
         ShootLaser();
+    }
+
+    public void Damage()
+    {
+        Lives--;
+        if (Lives <= 0)
+        {
+            Destroy(this.gameObject);
+            Debug.Log(Lives + "Lives Left");
+        }
     }
 
     void ShootLaser()
