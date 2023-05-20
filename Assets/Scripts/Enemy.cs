@@ -33,7 +33,8 @@ public class Enemy : MonoBehaviour
     {
         if (transform.position.y <= -5.36f)
         {
-            transform.position = new Vector3(Random.Range(-9.44f, 9.48f), 6.93f, 0);
+            float RandomX = Random.Range(-9.44f, 9.48f);
+            transform.position = new Vector3(RandomX, 6.93f, 0);
         }
     }
 }
