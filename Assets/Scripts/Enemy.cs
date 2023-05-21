@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
         transform.Translate(Vector3.down * EnemySpeed * Time.deltaTime);
     }
 
-    void Respawn()
+    public void Respawn()
     {
         if (transform.position.y <= -5.36f)
         {
