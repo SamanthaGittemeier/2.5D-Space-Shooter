@@ -9,13 +9,11 @@ public class SpawnManager : MonoBehaviour
     public GameObject Player_SM;
     public GameObject EnemyContainer;
 
-    // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(SpawnEnemies());
     }
 
-    // Update is called once per frame
     void Update()
     {
         

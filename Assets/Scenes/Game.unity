@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 1039154338}
   m_Layer: 0
   m_Name: SpawnManager
-  m_TagString: Untagged
+  m_TagString: Spawn Manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -402,6 +402,7 @@ MonoBehaviour:
   LaserPrefab: {fileID: 1850022061620374743, guid: 2009b9091f961b74dae35cbb7f8da50f,
     type: 3}
   Lives: 3
+  SpawnManager: {fileID: 0}
 --- !u!1 &1936881364
 GameObject:
   m_ObjectHideFlags: 0

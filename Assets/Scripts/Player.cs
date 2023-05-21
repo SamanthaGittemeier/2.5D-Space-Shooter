@@ -9,14 +9,14 @@ public class Player : MonoBehaviour
     private float FireRate = 0.25f;
     private float CanFire = -1f;
     public float Lives = 3;
+    public GameObject SpawnManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3(0, -3, 0);
+        SpawnManager = GameObject.FindGameObjectWithTag("Spawn Manager");
     }
 
-    // Update is called once per frame
     void Update()
     {
         PlayerMovement();
@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
         Lives--;
         if (Lives <= 0)
         {
+            Destroy(SpawnManager.GetComponent<SpawnManager>().EnemyContainer);
             Destroy(this.gameObject);
             Debug.Log(Lives + "Lives Left");
         }
@@ -46,7 +47,6 @@ public class Player : MonoBehaviour
 
     void PlayerMovement()
     {
-        //Player Input
         if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(Vector3.left * Speed * Time.deltaTime);
@@ -67,7 +67,6 @@ public class Player : MonoBehaviour
 
     void PlayerBounds()
     {
-        //Player Bounds
         if (transform.position.y <= -4.93f)
         {
             transform.position = new Vector3(transform.position.x, 6.98f, 0);
