@@ -36,21 +36,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Hit" + other.transform.name);
-        if (other.tag == "Player" )
+        Debug.Log("Hit" + collision.transform.name);
+        if (collision.tag == "Player")
         {
-            Player player = other.transform.GetComponent<Player>();
+            Player player = collision.transform.GetComponent<Player>();
             if (player != null)
             {
                 player.Damage();
             }
             Destroy(this.gameObject);
         }
-        if (other.tag == "Laser")
+        if (collision.tag == "Laser")
         {
-            Destroy(other.gameObject);
+            Destroy(collision.gameObject);
             Destroy(this.gameObject);
         }
     }

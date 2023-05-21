@@ -11,6 +11,7 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
+        Player_SM = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(SpawnEnemies());
     }
 
