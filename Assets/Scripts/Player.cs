@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float Speed = 5f;
-    public GameObject LaserPrefab;
-    private float FireRate = 0.25f;
-    private float CanFire = -1f;
-    public float Lives = 3;
-    public GameObject SpawnManager;
+    [SerializeField]
+    private float _speed = 5f;
+    [SerializeField]
+    private GameObject _laserPrefab;
+    private float _fireRate = 0.25f;
+    private float _canFire = -1f;
+    [SerializeField]
+    private float _lives = 3;
+    [SerializeField]
+    private SpawnManager _spawnManager;
 
     void Start()
     {
         transform.position = new Vector3(0, -3, 0);
-        SpawnManager = GameObject.FindGameObjectWithTag("Spawn Manager");
+        _spawnManager = GameObject.FindGameObjectWithTag("Spawn Manager").GetComponent<SpawnManager>();
     }
 
     void Update()
@@ -24,67 +28,51 @@ public class Player : MonoBehaviour
         ShootLaser();
     }
 
-    public void Damage()
-    {
-        Lives--;
-        if (Lives <= 0)
-        {
-            Destroy(SpawnManager.GetComponent<SpawnManager>().EnemyContainer);
-            Destroy(this.gameObject);
-            Debug.Log(Lives + "Lives Left");
-        }
-    }
-
-    void ShootLaser()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > CanFire)
-        {
-            CanFire = Time.time + FireRate;
-            Instantiate(LaserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
-            Debug.Log ("Space was pressed");
-        }
-    }
-
     void PlayerMovement()
     {
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(Vector3.left * Speed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(Vector3.right * Speed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.Translate(Vector3.up * Speed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(Vector3.down * Speed * Time.deltaTime);
-        }
+        float hInput = Input.GetAxis("Horizontal");
+        float vInput = Input.GetAxis("Vertical");
+        Vector3 direction = new Vector3(hInput, vInput, 0);
+        transform.Translate(direction * _speed * Time.deltaTime);
     }
-
     void PlayerBounds()
     {
-        if (transform.position.y <= -4.93f)
+        if (transform.position.y <= -6.65f)
         {
-            transform.position = new Vector3(transform.position.x, 6.98f, 0);
+            transform.position = new Vector3(transform.position.x, 6.65f, 0);
         }
-
-        else if (transform.position.y >= 6.99f)
+        else if (transform.position.y >= 6.66f)
         {
-            transform.position = new Vector3(transform.position.x, -4.92f, 0);
+            transform.position = new Vector3(transform.position.x, -6.65f, 0);
         }
 
         if (transform.position.x >= 10.37f)
         {
             transform.position = new Vector3(-10.37f, transform.position.y, 0);
         }
-
         else if (transform.position.x <= -10.38f)
         {
-            transform.position = new Vector3(10.36f, transform.position.y, 0);
+            transform.position = new Vector3(10.37f, transform.position.y, 0);
+        }
+    }
+
+    void ShootLaser()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        {
+            _canFire = Time.time + _fireRate;
+            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+            Debug.Log ("Space was pressed");
+        }
+    }
+    public void Damage()
+    {
+        _lives--;
+        if (_lives <= 0)
+        {
+            _spawnManager.OnPlayerDeath();
+            Destroy(this.gameObject);
+            Debug.Log(_lives + "Lives Left");
         }
     }
 }

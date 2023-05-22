@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject EnemeyPrefab_SM;
-    public float EnemyRandomX;
-    public GameObject Player_SM;
-    public GameObject EnemyContainer;
+    [SerializeField]
+    private GameObject _enemeyPrefab_SM;
+    private float _enemyRandomX;
+    [SerializeField]
+    private GameObject _enemyContainer;
+    private bool _stopSpawning;
 
     void Start()
     {
-        Player_SM = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(SpawnEnemies());
     }
 
@@ -22,16 +23,22 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemies()
     {
-        while (Player_SM.GetComponent<Player>().Lives >= 1)
+        while (_stopSpawning == false)
         {
-            EnemyRandomX = Random.Range(-9.44f, 9.48f);
-            GameObject NewEnemy = Instantiate(EnemeyPrefab_SM, new Vector3(EnemyRandomX, 6.93f, 0), Quaternion.identity);
-            NewEnemy.transform.parent = EnemyContainer.transform;
+            _enemyRandomX = Random.Range(-9.44f, 9.48f);
+            GameObject NewEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(_enemyRandomX, 6.93f, 0), Quaternion.identity);
+            NewEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(2.5f);
         }
-        if (Player_SM.GetComponent<Player>().Lives <= 0)
+        if (_stopSpawning == true)
         {
             StopCoroutine(SpawnEnemies());
         }
+    }
+
+    public void OnPlayerDeath()
+    {
+        _stopSpawning = true;
+        Destroy(_enemyContainer);
     }
 }

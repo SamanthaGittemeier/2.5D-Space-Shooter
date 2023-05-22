@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    public float LaserSpeed = 8f;
+    [SerializeField]
+    private float _laserSpeed = 8f;
 
     void Start()
     {
@@ -19,7 +20,7 @@ public class Laser : MonoBehaviour
 
     void MoveUp()
     {
-        transform.Translate(Vector3.up * LaserSpeed * Time.deltaTime);
+        transform.Translate(Vector3.up * _laserSpeed * Time.deltaTime);
     }
 
     void DestroyLaser()

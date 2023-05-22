@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    //-5.36f bottom of screen for enemy
-    //6.93f top of screen
-    //-9.44f left limit x
-    //9.48f right limit x
-
-    public float EnemySpeed = 4f;
+    private float _enemySpeed = 4f;
 
     void Start()
     {
@@ -24,7 +19,7 @@ public class Enemy : MonoBehaviour
 
     void MoveDown()
     {
-        transform.Translate(Vector3.down * EnemySpeed * Time.deltaTime);
+        transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
     }
 
     public void Respawn()

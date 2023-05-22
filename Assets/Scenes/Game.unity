@@ -325,11 +325,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f972a73e74510c4f89b0a607c54cacb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
-  LaserPrefab: {fileID: 1850022061620374743, guid: 2009b9091f961b74dae35cbb7f8da50f,
+  _speed: 5
+  _laserPrefab: {fileID: 1850022061620374743, guid: 2009b9091f961b74dae35cbb7f8da50f,
     type: 3}
-  Lives: 3
-  SpawnManager: {fileID: 0}
+  _lives: 3
+  _spawnManager: {fileID: 1039154338}
 --- !u!212 &460780143
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -449,11 +449,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc9f958a87dd084e9bb596c4cadfbd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemeyPrefab_SM: {fileID: 7753358588269737716, guid: a6f09e5e04d790a4690a24e1ea151214,
+  _enemeyPrefab_SM: {fileID: 7753358588269737716, guid: a6f09e5e04d790a4690a24e1ea151214,
     type: 3}
-  EnemyRandomX: 0
-  Player_SM: {fileID: 0}
-  EnemyContainer: {fileID: 1135641782}
+  _enemyContainer: {fileID: 1135641782}
 --- !u!4 &1039154339
 Transform:
   m_ObjectHideFlags: 0
@@ -576,7 +574,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936881364}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
