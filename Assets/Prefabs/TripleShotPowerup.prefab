@@ -134,3 +134,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerupSpeed: 3
+  _tripleShotPrefab_PU: {fileID: 1717892942798688155, guid: 7994ac47908530a4781af575925e1f0e,
+    type: 3}

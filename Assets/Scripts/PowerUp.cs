@@ -10,7 +10,7 @@ public class PowerUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //StartCoroutine(DestroyEmptyTripleShots());
+        
     }
 
     // Update is called once per frame
@@ -41,15 +41,4 @@ public class PowerUp : MonoBehaviour
     {
         transform.Translate(Vector3.down * _powerupSpeed * Time.deltaTime);
     }
-
-    public IEnumerator DestroyEmptyTripleShots()
-    {
-        yield return new WaitForSeconds(3f);
-        Destroy(this.gameObject);
-    }
-
-    //public void OnPowerUpOver()
-    //{
-    //    Destroy(this.gameObject);
-    //}
 }

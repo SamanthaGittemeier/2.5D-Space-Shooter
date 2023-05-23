@@ -6,20 +6,21 @@ public class Player : MonoBehaviour
 {
     private float _fireRate = 0.25f;
     private float _canFire = -1f;
-    //[SerializeField]
-    //private float _powerUpActive = -1f;
-    //[SerializeField]
-    //private float _powerUpLength = 5f;
     [SerializeField]
     private float _speed = 5f;
     [SerializeField]
     private float _lives = 3;
+
     [SerializeField]
     private bool _haveTripleShot;
+
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
+    [SerializeField]
+    private GameObject _emptyTripleShotParents; //= GameObject.FindWithTag("Triple Shot");
+
     [SerializeField]
     private SpawnManager _spawnManager;
 
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
         PlayerMovement();
         PlayerBounds();
         ShootLaser();
+        DestroyEmptyTripleShots();
     }
 
     void PlayerMovement()
@@ -77,6 +79,19 @@ public class Player : MonoBehaviour
             _canFire = Time.time + _fireRate;
         }
     }
+
+    public void DestroyEmptyTripleShots()
+    {
+        if (_haveTripleShot == false)
+        {
+            _emptyTripleShotParents = GameObject.FindWithTag("Triple Shot");
+            if (_emptyTripleShotParents != null && _emptyTripleShotParents.transform.childCount == 0)
+            {
+                Destroy(GameObject.FindWithTag("Triple Shot"));
+            }
+        }
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Triple Shot Powerup")
@@ -85,6 +100,7 @@ public class Player : MonoBehaviour
             StartCoroutine(TripleShotCooldown());
         }
     }
+
     IEnumerator TripleShotCooldown()
     {
         while (_haveTripleShot == true)
@@ -92,27 +108,7 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(5f);
             _haveTripleShot = false;
         }
-        if (_haveTripleShot == false)
-        {
-            ////StartCoroutine(DestroyEmptyTripleShots());
-            //StartCoroutine(_tripleShotPrefab.GetComponent<PowerUp>().DestroyEmptyTripleShots());
-            ////_tripleShotPrefab.GetComponent<PowerUp>().OnPowerUpOver();
-            StopCoroutine(TripleShotCooldown());
-        }
     }
-
-    //IEnumerator DestroyEmptyTripleShots()
-    //{
-    //    if (_haveTripleShot == false)
-    //    {
-    //        yield return new WaitForSeconds(3f);
-    //        Destroy(_tripleShotPrefab);
-    //    }
-    //    else if (_haveTripleShot == true)
-    //    {
-    //        StopCoroutine(DestroyEmptyTripleShots());
-    //    }
-    //}
 
     public void Damage()
     {
