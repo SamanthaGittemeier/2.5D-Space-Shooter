@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private float _fireRate = 0.25f;
+    private float _canFire = -1f;
+    //[SerializeField]
+    //private float _powerUpActive = -1f;
+    //[SerializeField]
+    //private float _powerUpLength = 5f;
     [SerializeField]
     private float _speed = 5f;
+    [SerializeField]
+    private float _lives = 3;
+    [SerializeField]
+    private bool _haveTripleShot;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
-    private float _fireRate = 0.25f;
-    private float _canFire = -1f;
-    [SerializeField]
-    private float _lives = 3;
     [SerializeField]
     private SpawnManager _spawnManager;
-    [SerializeField]
-    private bool _haveTripleShot;
 
     void Start()
     {
@@ -73,6 +77,42 @@ public class Player : MonoBehaviour
             _canFire = Time.time + _fireRate;
         }
     }
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Triple Shot Powerup")
+        {
+            _haveTripleShot = true;
+            StartCoroutine(TripleShotCooldown());
+        }
+    }
+    IEnumerator TripleShotCooldown()
+    {
+        while (_haveTripleShot == true)
+        {
+            yield return new WaitForSeconds(5f);
+            _haveTripleShot = false;
+        }
+        if (_haveTripleShot == false)
+        {
+            ////StartCoroutine(DestroyEmptyTripleShots());
+            //StartCoroutine(_tripleShotPrefab.GetComponent<PowerUp>().DestroyEmptyTripleShots());
+            ////_tripleShotPrefab.GetComponent<PowerUp>().OnPowerUpOver();
+            StopCoroutine(TripleShotCooldown());
+        }
+    }
+
+    //IEnumerator DestroyEmptyTripleShots()
+    //{
+    //    if (_haveTripleShot == false)
+    //    {
+    //        yield return new WaitForSeconds(3f);
+    //        Destroy(_tripleShotPrefab);
+    //    }
+    //    else if (_haveTripleShot == true)
+    //    {
+    //        StopCoroutine(DestroyEmptyTripleShots());
+    //    }
+    //}
 
     public void Damage()
     {
