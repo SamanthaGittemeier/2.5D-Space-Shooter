@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             _canFire = Time.time + _fireRate;
-            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+            Instantiate(_laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             Debug.Log ("Space was pressed");
         }
     }
