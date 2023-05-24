@@ -55,6 +55,7 @@ public class PowerUp : MonoBehaviour
                         Debug.Log("Speed Boost Acquired");
                         break;
                     case 2:
+                        player.FoundShield();
                         Debug.Log("Shields Found");
                         break;
                 }

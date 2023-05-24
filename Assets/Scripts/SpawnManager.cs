@@ -24,7 +24,7 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnEnemies());
-        StartCoroutine(SpawnTripleShotPowerup());
+        StartCoroutine(SpawnPowerups());
     }
 
     void Update()
@@ -47,7 +47,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public IEnumerator SpawnTripleShotPowerup()
+    public IEnumerator SpawnPowerups()
     {
         while (_stopSpawningPowerups == false)
         {
@@ -58,7 +58,7 @@ public class SpawnManager : MonoBehaviour
         }
         if (_stopSpawningPowerups == true)
         {
-            StopCoroutine(SpawnTripleShotPowerup());
+            StopCoroutine(SpawnPowerups());
         }
     }
 

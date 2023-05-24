@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     private bool _haveTripleShot;
     [SerializeField]
     private bool _haveSpeedBoost;
+    [SerializeField]
+    private bool _haveShield;
 
     [SerializeField]
     private GameObject _laserPrefab;
@@ -22,6 +24,8 @@ public class Player : MonoBehaviour
     private GameObject _tripleShotPrefab;
     [SerializeField]
     private GameObject _emptyTripleShotParents;
+    [SerializeField]
+    private GameObject _shield;
 
     [SerializeField]
     private SpawnManager _spawnManager;
@@ -30,6 +34,7 @@ public class Player : MonoBehaviour
     {
         transform.position = new Vector3(0, -3, 0);
         _spawnManager = GameObject.FindGameObjectWithTag("Spawn Manager").GetComponent<SpawnManager>();
+        _shield.SetActive(false);
     }
 
     void Update()
@@ -129,8 +134,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void FoundShield()
+    {
+        _haveShield = true;
+        _shield.gameObject.SetActive(true);
+    }
+
     public void Damage()
     {
+        if (_haveShield == true)
+        {
+            _haveShield = false;
+            _shield.gameObject.SetActive(false);
+            return;
+        }
         _lives--;
         if (_lives <= 0)
         {
