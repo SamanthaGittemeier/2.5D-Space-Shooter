@@ -11,13 +11,15 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPowerupPrefab;
     [SerializeField]
-    private GameObject _tripleShotPowerupContainer;
+    private GameObject _speedPowerupPrefab;
+    [SerializeField]
+    private GameObject[] _powerups;
 
     private float _enemyRandomX;
-    private float _tripleShotRandomX;
+    private float _tripleShotPowerupRandomX;
 
     private bool _stopSpawningEnemeis;
-    private bool _stopSpawningTripleShotPowerup;
+    private bool _stopSpawningPowerups;
 
     void Start()
     {
@@ -47,13 +49,14 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator SpawnTripleShotPowerup()
     {
-        while (_stopSpawningTripleShotPowerup == false)
+        while (_stopSpawningPowerups == false)
         {
-            _tripleShotRandomX = Random.Range(-9.25f, 9.25f);
-            Instantiate(_tripleShotPowerupPrefab, new Vector3(_tripleShotRandomX, 6.56f, 0), Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(3f, 7f));
+            _tripleShotPowerupRandomX = Random.Range(-9.25f, 9.25f);
+            int randomPowerups = Random.Range(0, _powerups.Length);
+            Instantiate(_powerups[randomPowerups], new Vector3(_tripleShotPowerupRandomX, 6.56f, 0), Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(3f, 8f));
         }
-        if (_stopSpawningTripleShotPowerup == true)
+        if (_stopSpawningPowerups == true)
         {
             StopCoroutine(SpawnTripleShotPowerup());
         }
@@ -63,6 +66,6 @@ public class SpawnManager : MonoBehaviour
     {
         _stopSpawningEnemeis = true;
         Destroy(_enemyContainer);
-        _stopSpawningTripleShotPowerup = true;
+        _stopSpawningPowerups = true;
     }
 }

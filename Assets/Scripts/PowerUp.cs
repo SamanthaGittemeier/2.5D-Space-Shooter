@@ -44,28 +44,14 @@ public class PowerUp : MonoBehaviour
             Player player = collision.transform.GetComponent<Player>();
             if (player != null)
             {
-                //if (_powerupID == 0)
-                //{
-                //    player.FoundTripleShotPowerup();
-                //    Destroy(this.gameObject);
-                //}
-                //else if (_powerupID == 1)
-                //{
-                //    //Speed
-                //    Debug.Log("Speed Boost Acquired");
-                //    Destroy(this.gameObject);
-                //}
-                //else if (_powerupID == 2)
-                //{
-                //    //Shield
-                //}
-
                 switch (_powerupID)
                 {
                     case 0:
                         player.FoundTripleShotPowerup();
+                        Debug.Log("Triple Shot Picked Up");
                         break;
                     case 1:
+                        player.FoundSpeedBoost();
                         Debug.Log("Speed Boost Acquired");
                         break;
                     case 2:

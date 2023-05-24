@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private bool _haveTripleShot;
+    [SerializeField]
+    private bool _haveSpeedBoost;
 
     [SerializeField]
     private GameObject _laserPrefab;
@@ -101,12 +103,29 @@ public class Player : MonoBehaviour
         StartCoroutine(TripleShotCooldown());
     }
 
-    public IEnumerator TripleShotCooldown()
+    IEnumerator TripleShotCooldown()
     {
         while (_haveTripleShot == true)
         {
             yield return new WaitForSeconds(5f);
             _haveTripleShot = false;
+        }
+    }
+
+    public void FoundSpeedBoost()
+    {
+        _haveSpeedBoost = true;
+        StartCoroutine(SpeedBoostCooldown());
+    }
+
+    IEnumerator SpeedBoostCooldown()
+    {
+        while (_haveSpeedBoost == true)
+        {
+            _speed = 8.5f;
+            yield return new WaitForSeconds(5f);
+            _speed = 5f;
+            _haveSpeedBoost = false;
         }
     }
 
