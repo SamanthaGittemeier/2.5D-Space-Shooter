@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
-    private GameObject _emptyTripleShotParents; //= GameObject.FindWithTag("Triple Shot");
+    private GameObject _emptyTripleShotParents;
 
     [SerializeField]
     private SpawnManager _spawnManager;
@@ -116,6 +116,7 @@ public class Player : MonoBehaviour
         if (_lives <= 0)
         {
             _spawnManager.OnPlayerDeath();
+            Destroy(GameObject.FindWithTag("Triple Shot Powerup"));
             Destroy(this.gameObject);
             Debug.Log(_lives + "Lives Left");
         }
