@@ -33,7 +33,6 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Hit" + collision.transform.name);
         if (collision.tag == "Player")
         {
             Player player = collision.transform.GetComponent<Player>();

@@ -52,6 +52,8 @@ public class PowerUp : MonoBehaviour
                 else if (_powerupID == 1)
                 {
                     //Speed
+                    Debug.Log("Speed Boost Acquired");
+                    Destroy(this.gameObject);
                 }
                 else if (_powerupID == 2)
                 {
