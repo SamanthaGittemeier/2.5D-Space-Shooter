@@ -95,16 +95,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void FoundTripleShotPowerup()
     {
-        if (collision.tag == "Triple Shot Powerup")
-        {
-            _haveTripleShot = true;
-            StartCoroutine(TripleShotCooldown());
-        }
+        _haveTripleShot = true;
+        StartCoroutine(TripleShotCooldown());
     }
 
-    IEnumerator TripleShotCooldown()
+    public IEnumerator TripleShotCooldown()
     {
         while (_haveTripleShot == true)
         {
