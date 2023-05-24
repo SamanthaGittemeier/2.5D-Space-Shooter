@@ -47,13 +47,16 @@ public class Player : MonoBehaviour
     }
     void PlayerBounds()
     {
-        if (transform.position.y <= -6.65f)
+        //use -6.65 to wrap through bottom
+        if (transform.position.y <= -4.75f)
         {
-            transform.position = new Vector3(transform.position.x, 6.65f, 0);
+            //if want to continue full wrap make it 6.65f
+            //use -4.75 to stop player from going past bottom of screen
+            transform.position = new Vector3(transform.position.x, -4.75f, 0);
         }
-        else if (transform.position.y >= 6.66f)
+        else if (transform.position.y >= 4.75)
         {
-            transform.position = new Vector3(transform.position.x, -6.65f, 0);
+            transform.position = new Vector3(transform.position.x, 4.75f, 0);
         }
 
         if (transform.position.x >= 10.37f)
