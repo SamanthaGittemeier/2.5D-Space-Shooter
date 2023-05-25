@@ -9,12 +9,15 @@ public class UIManager : MonoBehaviour
     private Text _scoreText;
 
     [SerializeField]
-    private GameObject _player;
+    private Sprite[] _livesSprite;
+
+    [SerializeField]
+    private Image _livesImage;
 
     // Start is called before the first frame update
     void Start()
     {
-        _player = GameObject.Find("Player");
+        _livesImage = GameObject.Find("Lives Display").GetComponent<Image>();
         _scoreText = GameObject.Find("Score Text").GetComponent<Text>();
         _scoreText.text = "Score:" + 0;
     }
@@ -22,5 +25,10 @@ public class UIManager : MonoBehaviour
     public void UpdateScore(int _playerScore)
     {
         _scoreText.text = "Score: " + _playerScore;
+    }
+
+    public void UpdateLives(int _currentLives)
+    {
+        _livesImage.sprite = _livesSprite[_currentLives];
     }
 }

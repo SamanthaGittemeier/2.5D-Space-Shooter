@@ -11,6 +11,7 @@ TagManager:
   - Triple Shot
   - Speed Powerup
   - Shield Powerup
+  - UI Manager
   layers:
   - Default
   - TransparentFX

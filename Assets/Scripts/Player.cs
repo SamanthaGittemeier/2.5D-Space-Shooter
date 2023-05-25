@@ -8,9 +8,9 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
     [SerializeField]
     private float _speed = 5f;
-    [SerializeField]
-    private float _lives = 3;
 
+    [SerializeField]
+    private int _lives = 3;
     [SerializeField]
     private int _score;
 
@@ -155,7 +155,10 @@ public class Player : MonoBehaviour
             _shield.gameObject.SetActive(false);
             return;
         }
+
         _lives--;
+        _uiManager.UpdateLives(_lives);
+
         if (_lives <= 0)
         {
             _spawnManager.OnPlayerDeath();
