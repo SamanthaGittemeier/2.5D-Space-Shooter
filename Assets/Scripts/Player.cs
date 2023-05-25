@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     private float _lives = 3;
 
     [SerializeField]
+    private int _score;
+
+    [SerializeField]
     private bool _haveTripleShot;
     [SerializeField]
     private bool _haveSpeedBoost;
@@ -30,11 +33,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private SpawnManager _spawnManager;
 
+    [SerializeField]
+    private UIManager _uiManager;
+
     void Start()
     {
         transform.position = new Vector3(0, -3, 0);
         _spawnManager = GameObject.FindGameObjectWithTag("Spawn Manager").GetComponent<SpawnManager>();
         _shield.SetActive(false);
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
     void Update()
@@ -156,5 +163,11 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
             Debug.Log(_lives + "Lives Left");
         }
+    }
+
+    public void KilledEnemy(int _points)
+    {
+        _score += 10;
+        _uiManager.UpdateScore(_score);
     }
 }
