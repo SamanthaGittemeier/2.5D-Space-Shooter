@@ -13,6 +13,7 @@ TagManager:
   - Shield Powerup
   - UI Manager
   - Game Manager
+  - Play Button
   layers:
   - Default
   - TransparentFX

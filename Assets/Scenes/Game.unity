@@ -537,7 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _lives: 1
+  _lives: 3
   _score: 0
   _haveTripleShot: 0
   _haveSpeedBoost: 0
@@ -548,6 +548,7 @@ MonoBehaviour:
     type: 3}
   _emptyTripleShotParents: {fileID: 0}
   _shield: {fileID: 449908223}
+  _gameManager: {fileID: 0}
   _spawnManager: {fileID: 1039154338}
   _uiManager: {fileID: 0}
 --- !u!212 &460780143

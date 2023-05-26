@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver == true)
         {
             Debug.Log("R Key Pressed");
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene(1);
         }
     }
 
