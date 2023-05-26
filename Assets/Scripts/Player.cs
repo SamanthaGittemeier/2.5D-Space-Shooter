@@ -163,6 +163,7 @@ public class Player : MonoBehaviour
         {
             _spawnManager.OnPlayerDeath();
             Destroy(GameObject.FindWithTag("Triple Shot Powerup"));
+            //_uiManager.ShowGameOver();
             Destroy(this.gameObject);
             Debug.Log(_lives + "Lives Left");
         }
