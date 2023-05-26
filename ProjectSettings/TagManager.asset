@@ -12,6 +12,7 @@ TagManager:
   - Speed Powerup
   - Shield Powerup
   - UI Manager
+  - Game Manager
   layers:
   - Default
   - TransparentFX

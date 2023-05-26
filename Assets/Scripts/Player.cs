@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     private GameObject _emptyTripleShotParents;
     [SerializeField]
     private GameObject _shield;
+    [SerializeField]
+    private GameManager _gameManager;
 
     [SerializeField]
     private SpawnManager _spawnManager;
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.FindGameObjectWithTag("Spawn Manager").GetComponent<SpawnManager>();
         _shield.SetActive(false);
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     void Update()
@@ -163,9 +166,9 @@ public class Player : MonoBehaviour
         {
             _spawnManager.OnPlayerDeath();
             Destroy(GameObject.FindWithTag("Triple Shot Powerup"));
-            //_uiManager.ShowGameOver();
             Destroy(this.gameObject);
             Debug.Log(_lives + "Lives Left");
+            _gameManager.GameOver();
         }
     }
 
