@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
                 player.Damage();
                 _enemySpeed = 0;
                 _enemyAnimator.SetTrigger("OnEnemyDeath");
-                Destroy(this.gameObject, 2.38f);
+                Destroy(this.gameObject, 1.25f);
             }
         }
         if (collision.tag == "Laser")
@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
             _player.KilledEnemy(10);
             _enemySpeed = 0;
             _enemyAnimator.SetTrigger("OnEnemyDeath");
-            Destroy(this.gameObject, 2.38f);
+            Destroy(this.gameObject, 1.25f);
         }
     }
 }

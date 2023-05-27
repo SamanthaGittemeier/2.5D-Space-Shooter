@@ -30,6 +30,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _shield;
     [SerializeField]
+    private GameObject _leftWingDamaged;
+    [SerializeField]
+    private GameObject _rightWingDamaged;
+
+    [SerializeField]
     private GameManager _gameManager;
 
     [SerializeField]
@@ -45,6 +50,10 @@ public class Player : MonoBehaviour
         _shield.SetActive(false);
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        _leftWingDamaged = GameObject.Find("Left Wing Damage");
+        _rightWingDamaged = GameObject.Find("Right Wing Damage");
+        _leftWingDamaged.gameObject.SetActive(false);
+        _rightWingDamaged.gameObject.SetActive(false);
     }
 
     void Update()
@@ -161,6 +170,16 @@ public class Player : MonoBehaviour
 
         _lives--;
         _uiManager.UpdateLives(_lives);
+
+        if(_lives <= 2)
+        {
+            _leftWingDamaged.gameObject.SetActive(true);
+        }
+
+        if (_lives <= 1)
+        {
+            _rightWingDamaged.gameObject.SetActive(true);
+        }
 
         if (_lives <= 0)
         {
