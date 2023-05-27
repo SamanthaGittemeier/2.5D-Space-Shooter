@@ -20,11 +20,11 @@ public class SpawnManager : MonoBehaviour
 
     private bool _stopSpawningEnemeis;
     private bool _stopSpawningPowerups;
+    //private bool _asteroidDestroyed = false;
 
     void Start()
     {
-        StartCoroutine(SpawnEnemies());
-        StartCoroutine(SpawnPowerups());
+        
     }
 
     void Update()
@@ -32,8 +32,15 @@ public class SpawnManager : MonoBehaviour
         
     }
 
+    public void StartSpawning()
+    {
+        StartCoroutine(SpawnEnemies());
+        StartCoroutine(SpawnPowerups());
+    }
+
     IEnumerator SpawnEnemies()
     {
+        yield return new WaitForSeconds(2f);
         while (_stopSpawningEnemeis == false)
         {
             _enemyRandomX = Random.Range(-9.44f, 9.48f);
@@ -49,6 +56,7 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator SpawnPowerups()
     {
+        yield return new WaitForSeconds(2f);
         while (_stopSpawningPowerups == false)
         {
             _tripleShotPowerupRandomX = Random.Range(-9.25f, 9.25f);
