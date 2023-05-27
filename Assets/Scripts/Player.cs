@@ -33,6 +33,18 @@ public class Player : MonoBehaviour
     private GameObject _leftWingDamaged;
     [SerializeField]
     private GameObject _rightWingDamaged;
+    [SerializeField]
+    private GameObject _playerThruster;
+
+    [SerializeField]
+    private AudioSource _laserAudio;
+    [SerializeField]
+    private AudioSource _playerExplosionAudio;
+    [SerializeField]
+    private AudioSource _powerupAudio;
+
+    [SerializeField]
+    private Animator _playerExplodeAnimation;
 
     [SerializeField]
     private GameManager _gameManager;
@@ -54,6 +66,11 @@ public class Player : MonoBehaviour
         _rightWingDamaged = GameObject.Find("Right Wing Damage");
         _leftWingDamaged.gameObject.SetActive(false);
         _rightWingDamaged.gameObject.SetActive(false);
+        _laserAudio = GameObject.Find("Laser Audio").GetComponent<AudioSource>();
+        _playerExplosionAudio = gameObject.GetComponent<AudioSource>();
+        _playerExplodeAnimation = gameObject.GetComponent<Animator>();
+        _playerThruster = GameObject.Find("Thruster");
+        _powerupAudio = GameObject.Find("Powerup Audio").GetComponent<AudioSource>();
     }
 
     void Update()
@@ -101,11 +118,13 @@ public class Player : MonoBehaviour
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
             _canFire = Time.time + _fireRate;
+            _laserAudio.Play();
         }
         else if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == false && Time.time > _canFire)
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             _canFire = Time.time + _fireRate;
+            _laserAudio.Play();
         }
     }
 
@@ -124,6 +143,7 @@ public class Player : MonoBehaviour
     public void FoundTripleShotPowerup()
     {
         _haveTripleShot = true;
+        _powerupAudio.Play();
         StartCoroutine(TripleShotCooldown());
     }
 
@@ -139,6 +159,7 @@ public class Player : MonoBehaviour
     public void FoundSpeedBoost()
     {
         _haveSpeedBoost = true;
+        _powerupAudio.Play();
         StartCoroutine(SpeedBoostCooldown());
     }
 
@@ -156,6 +177,7 @@ public class Player : MonoBehaviour
     public void FoundShield()
     {
         _haveShield = true;
+        _powerupAudio.Play();
         _shield.gameObject.SetActive(true);
     }
 
@@ -185,8 +207,12 @@ public class Player : MonoBehaviour
         {
             _spawnManager.OnPlayerDeath();
             Destroy(GameObject.FindWithTag("Triple Shot Powerup"));
-            Destroy(this.gameObject);
-            Debug.Log(_lives + "Lives Left");
+            _playerExplosionAudio.Play();
+            _playerExplodeAnimation.SetTrigger("PlayerDead");
+            _leftWingDamaged.SetActive(false);
+            _rightWingDamaged.SetActive(false);
+            _playerThruster.SetActive(false);
+            Destroy(this.gameObject, 1.25f);
             _gameManager.GameOver();
         }
     }

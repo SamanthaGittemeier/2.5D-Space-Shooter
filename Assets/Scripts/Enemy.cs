@@ -12,11 +12,23 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Animator _enemyAnimator;
 
+    [SerializeField]
+    private AudioSource _enemyAudio;
+
+    [SerializeField]
+    private Collider2D _enemyCollider;
+
+    [SerializeField]
+    private Rigidbody2D _enemyRB;
+
 
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _enemyAnimator = gameObject.GetComponent<Animator>();
+        _enemyAudio = gameObject.GetComponent<AudioSource>();
+        _enemyCollider = gameObject.GetComponent<Collider2D>();
+        _enemyRB = gameObject.GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -48,7 +60,11 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
                 _enemySpeed = 0;
+                _player.KilledEnemy(10);
                 _enemyAnimator.SetTrigger("OnEnemyDeath");
+                _enemyAudio.Play();
+                Destroy(_enemyCollider);
+                Destroy(_enemyRB);
                 Destroy(this.gameObject, 1.25f);
             }
         }
@@ -58,6 +74,9 @@ public class Enemy : MonoBehaviour
             _player.KilledEnemy(10);
             _enemySpeed = 0;
             _enemyAnimator.SetTrigger("OnEnemyDeath");
+            _enemyAudio.Play();
+            Destroy(_enemyCollider);
+            Destroy(_enemyRB);
             Destroy(this.gameObject, 1.25f);
         }
     }
