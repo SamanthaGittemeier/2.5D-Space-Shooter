@@ -7,6 +7,9 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private float _laserSpeed = 8f;
 
+    [SerializeField]
+    private bool _isEnemyLaser = false;
+
     void Start()
     {
         
@@ -14,20 +17,44 @@ public class Laser : MonoBehaviour
 
     void Update()
     {
-        MoveUp();
-        DestroyLaser();
+        if (_isEnemyLaser == false)
+        {
+            MoveUp();
+        }
+        else if (_isEnemyLaser == true)
+        {
+            MoveDown();
+        }
     }
 
-    void MoveUp()
+    public void MoveUp()
     {
         transform.Translate(Vector3.up * _laserSpeed * Time.deltaTime);
-    }
-
-    void DestroyLaser()
-    {
         if (transform.position.y >= 8f)
         {
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
             Destroy(this.gameObject);
         }
+    }
+
+    public void MoveDown()
+    {
+        transform.Translate(Vector3.down * _laserSpeed * Time.deltaTime);
+        if (transform.position.y <= -8f)
+        {
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void AssignToEnemy()
+    {
+        _isEnemyLaser = true;
     }
 }

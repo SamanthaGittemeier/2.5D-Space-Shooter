@@ -50,6 +50,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _enemyAnimator: {fileID: 0}
+  _enemyAudio: {fileID: 0}
+  _enemyCollider: {fileID: 0}
+  _enemyRB: {fileID: 0}
+  _enemyLaserPrefab: {fileID: 113815090639864302, guid: 3ce4dd318babba44ab9a420cbbbe3735,
+    type: 3}
 --- !u!212 &3279845214827254908
 SpriteRenderer:
   m_ObjectHideFlags: 0

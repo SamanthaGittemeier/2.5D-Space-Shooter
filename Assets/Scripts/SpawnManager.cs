@@ -20,7 +20,6 @@ public class SpawnManager : MonoBehaviour
 
     private bool _stopSpawningEnemeis;
     private bool _stopSpawningPowerups;
-    //private bool _asteroidDestroyed = false;
 
     void Start()
     {

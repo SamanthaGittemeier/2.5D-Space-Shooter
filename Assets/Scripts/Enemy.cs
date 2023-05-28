@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private float _enemySpeed = 4f;
+    private float _enemyFireRate;
+    private float _enemyCanFire = -1f;
 
     [SerializeField]
     private Player _player;
@@ -21,6 +23,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Rigidbody2D _enemyRB;
 
+    [SerializeField]
+    private GameObject _enemyLaserPrefab;
+
 
     void Start()
     {
@@ -35,6 +40,7 @@ public class Enemy : MonoBehaviour
     {
         MoveDown();
         Respawn();
+        FireBack();
     }
 
     void MoveDown()
@@ -48,6 +54,21 @@ public class Enemy : MonoBehaviour
         {
             float RandomX = Random.Range(-9.47f, 9.47f);
             transform.position = new Vector3(RandomX, 6.93f, 0);
+        }
+    }
+
+    public void FireBack()
+    {
+        if (Time.time > _enemyCanFire)
+        {
+            _enemyFireRate = Random.Range(3f, 7f);
+            _enemyCanFire = Time.time + _enemyFireRate;
+            GameObject _enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+            Laser[] _lasers = _enemyLaser.GetComponentsInChildren<Laser>();
+            for (int i = 0; i < _lasers.Length; i++)
+            {
+                _lasers[i].AssignToEnemy();
+            }
         }
     }
 

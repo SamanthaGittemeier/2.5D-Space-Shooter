@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image _livesImage;
 
-    // Start is called before the first frame update
     void Start()
     {
         _livesImage = GameObject.Find("Lives Display").GetComponent<Image>();

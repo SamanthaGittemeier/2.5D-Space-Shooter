@@ -214,6 +214,7 @@ public class Player : MonoBehaviour
             _playerThruster.SetActive(false);
             Destroy(this.gameObject, 1.25f);
             _gameManager.GameOver();
+            _speed = 0;
         }
     }
 
