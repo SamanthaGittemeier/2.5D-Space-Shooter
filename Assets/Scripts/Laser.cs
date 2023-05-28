@@ -10,9 +10,12 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private bool _isEnemyLaser = false;
 
+    [SerializeField]
+    private Player _player;
+
     void Start()
     {
-        
+        _player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     void Update()
@@ -56,5 +59,14 @@ public class Laser : MonoBehaviour
     public void AssignToEnemy()
     {
         _isEnemyLaser = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(_isEnemyLaser == true && collision.tag == "Player")
+        {
+            Debug.Log("Hit Player");
+            _player.Damage();
+        }
     }
 }
