@@ -78,7 +78,6 @@ public class Player : MonoBehaviour
         PlayerMovement();
         PlayerBounds();
         ShootLaser();
-        DestroyEmptyTripleShots();
     }
 
     void PlayerMovement()
@@ -125,18 +124,6 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             _canFire = Time.time + _fireRate;
             _laserAudio.Play();
-        }
-    }
-
-    public void DestroyEmptyTripleShots()
-    {
-        if (_haveTripleShot == false)
-        {
-            _emptyTripleShotParents = GameObject.FindWithTag("Triple Shot");
-            if (_emptyTripleShotParents != null && _emptyTripleShotParents.transform.childCount == 0)
-            {
-                Destroy(GameObject.FindWithTag("Triple Shot"));
-            }
         }
     }
 
@@ -222,5 +209,15 @@ public class Player : MonoBehaviour
     {
         _score += 10;
         _uiManager.UpdateScore(_score);
+    }
+
+    public void Sprint()
+    {
+        _speed = 6.5f;
+    }
+
+    public void ResetSpeed()
+    {
+        _speed = 5f;
     }
 }
