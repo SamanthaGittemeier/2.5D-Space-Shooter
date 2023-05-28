@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
             Debug.Log("R Key Pressed");
             SceneManager.LoadScene(1);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void GameOver()

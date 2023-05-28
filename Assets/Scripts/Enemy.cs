@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _enemyLaserPrefab;
 
-
+    //Start is called before first frame
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
