@@ -26,8 +26,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
-    private GameObject _emptyTripleShotParents;
-    [SerializeField]
     private GameObject _shield;
     [SerializeField]
     private GameObject _leftWingDamaged;
@@ -78,7 +76,6 @@ public class Player : MonoBehaviour
         PlayerMovement();
         PlayerBounds();
         ShootLaser();
-        DestroyEmptyTripleShots();
     }
 
     void PlayerMovement()
@@ -128,18 +125,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void DestroyEmptyTripleShots()
-    {
-        if (_haveTripleShot == false)
-        {
-            _emptyTripleShotParents = GameObject.FindWithTag("Triple Shot");
-            if (_emptyTripleShotParents != null && _emptyTripleShotParents.transform.childCount == 0)
-            {
-                Destroy(GameObject.FindWithTag("Triple Shot"));
-            }
-        }
-    }
-
     public void FoundTripleShotPowerup()
     {
         _haveTripleShot = true;
@@ -180,6 +165,17 @@ public class Player : MonoBehaviour
         _powerupAudio.Play();
         _shield.gameObject.SetActive(true);
     }
+
+    //base shield color 0, 116, 255
+    //first hit color 255, 0, 255
+    //second hit color 255, 0, 0
+    //third hit shield is gone
+
+    //or change alpha
+    //255 at start
+    //170 first hit
+    //85 second hit
+    //third hit shield is gone
 
     public void Damage()
     {
@@ -222,5 +218,15 @@ public class Player : MonoBehaviour
     {
         _score += 10;
         _uiManager.UpdateScore(_score);
+    }
+
+    public void Sprint()
+    {
+        _speed = 6.5f;
+    }
+
+    public void ResetSpeed()
+    {
+        _speed = 5f;
     }
 }

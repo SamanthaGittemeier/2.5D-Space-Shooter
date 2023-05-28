@@ -8,10 +8,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool _isGameOver;
 
+    [SerializeField]
+    private Player _playerGM;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _playerGM = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -26,6 +29,15 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            _playerGM.Sprint();
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
+        {
+            _playerGM.ResetSpeed();
         }
     }
 
