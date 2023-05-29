@@ -13,8 +13,8 @@ public class Player : MonoBehaviour
     private int _lives = 3;
     [SerializeField]
     private int _score;
-    //[SerializeField]
-    //private int _shieldHealth;
+    [SerializeField]
+    private int _ammoCount;
 
     [SerializeField]
     private bool _haveTripleShot;
@@ -76,6 +76,7 @@ public class Player : MonoBehaviour
         _shieldAnimator = _shield.GetComponent<Animator>();
         _shieldAnimator.SetInteger("_shieldHealth", 2);
         _shield.SetActive(false);
+        _ammoCount = 15;
     }
 
     void Update()
@@ -118,17 +119,21 @@ public class Player : MonoBehaviour
 
     void ShootLaser()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == true && Time.time > _canFire)
+        if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == true && Time.time > _canFire && _ammoCount != 0)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
             _canFire = Time.time + _fireRate;
             _laserAudio.Play();
+            _ammoCount--;
+            _uiManager.UpdateAmmo(_ammoCount);
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == false && Time.time > _canFire)
+        else if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == false && Time.time > _canFire && _ammoCount != 0)
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             _canFire = Time.time + _fireRate;
             _laserAudio.Play();
+            _ammoCount--;
+            _uiManager.UpdateAmmo(_ammoCount);
         }
     }
 
