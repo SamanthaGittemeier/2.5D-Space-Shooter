@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private float _fireRate = 0.25f;
-    private float _canFire = -1f;
     [SerializeField]
     private float _speed = 5f;
+    private float _fireRate = 0.25f;
+    private float _canFire = -1f;
 
     [SerializeField]
     private int _lives = 3;
     [SerializeField]
     private int _score;
+    //[SerializeField]
+    //private int _shieldHealth;
 
     [SerializeField]
     private bool _haveTripleShot;
@@ -43,6 +45,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private Animator _playerExplodeAnimation;
+    [SerializeField]
+    private Animator _shieldAnimator;
 
     [SerializeField]
     private GameManager _gameManager;
@@ -57,18 +61,21 @@ public class Player : MonoBehaviour
     {
         transform.position = new Vector3(0, -3, 0);
         _spawnManager = GameObject.FindGameObjectWithTag("Spawn Manager").GetComponent<SpawnManager>();
-        _shield.SetActive(false);
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        _playerThruster = GameObject.Find("Thruster");
+        _powerupAudio = GameObject.Find("Powerup Audio").GetComponent<AudioSource>();
+        _laserAudio = GameObject.Find("Laser Audio").GetComponent<AudioSource>();
+        _playerExplosionAudio = gameObject.GetComponent<AudioSource>();
+        _playerExplodeAnimation = gameObject.GetComponent<Animator>();
         _leftWingDamaged = GameObject.Find("Left Wing Damage");
         _rightWingDamaged = GameObject.Find("Right Wing Damage");
         _leftWingDamaged.gameObject.SetActive(false);
         _rightWingDamaged.gameObject.SetActive(false);
-        _laserAudio = GameObject.Find("Laser Audio").GetComponent<AudioSource>();
-        _playerExplosionAudio = gameObject.GetComponent<AudioSource>();
-        _playerExplodeAnimation = gameObject.GetComponent<Animator>();
-        _playerThruster = GameObject.Find("Thruster");
-        _powerupAudio = GameObject.Find("Powerup Audio").GetComponent<AudioSource>();
+        _shield = GameObject.Find("Shield");
+        _shieldAnimator = _shield.GetComponent<Animator>();
+        _shieldAnimator.SetInteger("_shieldHealth", 2);
+        _shield.SetActive(false);
     }
 
     void Update()
@@ -166,23 +173,30 @@ public class Player : MonoBehaviour
         _shield.gameObject.SetActive(true);
     }
 
-    //base shield color 0, 116, 255
-    //first hit color 255, 0, 255
-    //second hit color 255, 0, 0
-    //third hit shield is gone
-
-    //or change alpha
-    //255 at start
-    //170 first hit
-    //85 second hit
-    //third hit shield is gone
+    public void ShieldHits()
+    {
+        //_shieldHealth = _shieldAnimator.GetInteger("_shieldHealth");
+        if (_shieldAnimator.GetInteger("_shieldHealth") == 2)
+        {
+            _shieldAnimator.SetInteger("_shieldHealth", 1);
+        }
+        else if (_shieldAnimator.GetInteger("_shieldHealth") == 1)
+        {
+            _shieldAnimator.SetInteger("_shieldHealth", 0);
+        }
+        else if (_shieldAnimator.GetInteger("_shieldHealth") == 0)
+        {
+            _shieldAnimator.SetInteger("_shieldHealth", 3);
+            _shield.SetActive(false);
+            _haveShield = false;
+        }
+    }
 
     public void Damage()
     {
         if (_haveShield == true)
         {
-            _haveShield = false;
-            _shield.gameObject.SetActive(false);
+            ShieldHits();
             return;
         }
 

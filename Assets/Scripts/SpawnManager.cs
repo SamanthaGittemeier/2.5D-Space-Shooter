@@ -9,6 +9,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
+    private GameObject _powerupContainer;
+    [SerializeField]
     private GameObject _tripleShotPowerupPrefab;
     [SerializeField]
     private GameObject _speedPowerupPrefab;
@@ -23,7 +25,8 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-        
+        _enemyContainer = GameObject.Find("EnemyContainer");
+        _powerupContainer = GameObject.Find("PowerupContainer");
     }
 
     void Update()
@@ -60,7 +63,8 @@ public class SpawnManager : MonoBehaviour
         {
             _tripleShotPowerupRandomX = Random.Range(-9.25f, 9.25f);
             int randomPowerups = Random.Range(0, _powerups.Length);
-            Instantiate(_powerups[randomPowerups], new Vector3(_tripleShotPowerupRandomX, 6.56f, 0), Quaternion.identity);
+            GameObject NewPowerup = Instantiate(_powerups[randomPowerups], new Vector3(_tripleShotPowerupRandomX, 6.56f, 0), Quaternion.identity);
+            NewPowerup.transform.parent = _powerupContainer.transform;
             yield return new WaitForSeconds(Random.Range(3f, 8f));
         }
         if (_stopSpawningPowerups == true)
@@ -74,5 +78,6 @@ public class SpawnManager : MonoBehaviour
         _stopSpawningEnemeis = true;
         Destroy(_enemyContainer);
         _stopSpawningPowerups = true;
+        Destroy(_powerupContainer);
     }
 }
