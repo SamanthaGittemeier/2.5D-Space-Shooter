@@ -173,25 +173,6 @@ public class Player : MonoBehaviour
         _shield.gameObject.SetActive(true);
     }
 
-    public void ShieldHits()
-    {
-        //_shieldHealth = _shieldAnimator.GetInteger("_shieldHealth");
-        if (_shieldAnimator.GetInteger("_shieldHealth") == 2)
-        {
-            _shieldAnimator.SetInteger("_shieldHealth", 1);
-        }
-        else if (_shieldAnimator.GetInteger("_shieldHealth") == 1)
-        {
-            _shieldAnimator.SetInteger("_shieldHealth", 0);
-        }
-        else if (_shieldAnimator.GetInteger("_shieldHealth") == 0)
-        {
-            _shieldAnimator.SetInteger("_shieldHealth", 3);
-            _shield.SetActive(false);
-            _haveShield = false;
-        }
-    }
-
     public void Damage()
     {
         if (_haveShield == true)
@@ -225,6 +206,23 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject, 1.25f);
             _gameManager.GameOver();
             _speed = 0;
+        }
+    }
+    public void ShieldHits()
+    {
+        if (_shieldAnimator.GetInteger("_shieldHealth") == 2)
+        {
+            _shieldAnimator.SetInteger("_shieldHealth", 1);
+        }
+        else if (_shieldAnimator.GetInteger("_shieldHealth") == 1)
+        {
+            _shieldAnimator.SetInteger("_shieldHealth", 0);
+        }
+        else if (_shieldAnimator.GetInteger("_shieldHealth") == 0)
+        {
+            _shieldAnimator.SetInteger("_shieldHealth", 3);
+            _shield.SetActive(false);
+            _haveShield = false;
         }
     }
 
