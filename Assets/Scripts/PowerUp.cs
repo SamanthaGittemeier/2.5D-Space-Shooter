@@ -62,6 +62,10 @@ public class PowerUp : MonoBehaviour
                         player.FoundAmmo();
                         Debug.Log("Found Ammo");
                         break;
+                    case 4:
+                        player.FoundHealth();
+                        Debug.Log("Extra Life");
+                        break;
                 }
                 Destroy(this.gameObject);
             }

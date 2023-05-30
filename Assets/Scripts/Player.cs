@@ -185,6 +185,16 @@ public class Player : MonoBehaviour
         _uiManager.UpdateAmmo(_ammoCount);
     }
 
+    public void FoundHealth()
+    {
+        if (_lives < 3)
+        {
+            _lives++;
+            _uiManager.UpdateLives(_lives);
+            _powerupAudio.Play();
+        }
+    }
+
     public void Damage()
     {
         if (_haveShield == true)
