@@ -58,6 +58,10 @@ public class PowerUp : MonoBehaviour
                         player.FoundShield();
                         Debug.Log("Shields Found");
                         break;
+                    case 3:
+                        player.FoundAmmo();
+                        Debug.Log("Found Ammo");
+                        break;
                 }
                 Destroy(this.gameObject);
             }

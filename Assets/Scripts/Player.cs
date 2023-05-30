@@ -178,6 +178,13 @@ public class Player : MonoBehaviour
         _shield.gameObject.SetActive(true);
     }
 
+    public void FoundAmmo()
+    {
+        _ammoCount = _ammoCount + 15;
+        _powerupAudio.Play();
+        _uiManager.UpdateAmmo(_ammoCount);
+    }
+
     public void Damage()
     {
         if (_haveShield == true)

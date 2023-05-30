@@ -11,14 +11,10 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _powerupContainer;
     [SerializeField]
-    private GameObject _tripleShotPowerupPrefab;
-    [SerializeField]
-    private GameObject _speedPowerupPrefab;
-    [SerializeField]
     private GameObject[] _powerups;
 
     private float _enemyRandomX;
-    private float _tripleShotPowerupRandomX;
+    private float _powerupRandomX;
 
     private bool _stopSpawningEnemeis;
     private bool _stopSpawningPowerups;
@@ -61,9 +57,9 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         while (_stopSpawningPowerups == false)
         {
-            _tripleShotPowerupRandomX = Random.Range(-9.25f, 9.25f);
+            _powerupRandomX = Random.Range(-9.25f, 9.25f);
             int randomPowerups = Random.Range(0, _powerups.Length);
-            GameObject NewPowerup = Instantiate(_powerups[randomPowerups], new Vector3(_tripleShotPowerupRandomX, 6.56f, 0), Quaternion.identity);
+            GameObject NewPowerup = Instantiate(_powerups[randomPowerups], new Vector3(_powerupRandomX, 6.56f, 0), Quaternion.identity);
             NewPowerup.transform.parent = _powerupContainer.transform;
             yield return new WaitForSeconds(Random.Range(3f, 8f));
         }
