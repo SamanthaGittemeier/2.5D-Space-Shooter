@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
     private Image _livesImage;
 
     [SerializeField]
-    private GameObject _ammoCountBlue;
+    private GameObject _ammoCountWhite;
     [SerializeField]
     private GameObject _ammoCountRed;
 
@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
         _restartText.gameObject.SetActive(false);
         _ammoCountText = GameObject.Find("Ammo Count Text").GetComponent<Text>();
         _ammoCountText.text = "15";
-        _ammoCountBlue = GameObject.Find("Ammo Count Blue");
+        _ammoCountWhite = GameObject.Find("Ammo Count White");
         _ammoCountRed = GameObject.Find("Ammo Count Red");
         _ammoCountRed.SetActive(false);
     }
@@ -51,12 +51,12 @@ public class UIManager : MonoBehaviour
         _ammoCountText.text = _currentAmmoCount.ToString();
         if (_currentAmmoCount == 0)
         {
-            _ammoCountBlue.SetActive(false);
+            _ammoCountWhite.SetActive(false);
             _ammoCountRed.SetActive(true);
         }
         else if (_currentAmmoCount != 0)
         {
-            _ammoCountBlue.SetActive(true);
+            _ammoCountWhite.SetActive(true);
             _ammoCountRed.SetActive(false);
         }
     }
