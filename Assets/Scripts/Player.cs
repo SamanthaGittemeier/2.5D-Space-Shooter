@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
     private GameObject _rightWingDamaged;
     [SerializeField]
     private GameObject _playerThruster;
+    [SerializeField]
+    private GameObject _repair;
 
     [SerializeField]
     private AudioSource _laserAudio;
@@ -77,6 +79,8 @@ public class Player : MonoBehaviour
         _shieldAnimator.SetInteger("_shieldHealth", 2);
         _shield.SetActive(false);
         _ammoCount = 15;
+        _repair = GameObject.Find("Repair");
+        _repair.gameObject.SetActive(false);
     }
 
     void Update()
@@ -192,7 +196,24 @@ public class Player : MonoBehaviour
             _lives++;
             _uiManager.UpdateLives(_lives);
             _powerupAudio.Play();
+            StartCoroutine(RepairVisual());
+            if (_lives == 3)
+            {
+                _rightWingDamaged.SetActive(false);
+                _leftWingDamaged.SetActive(false);
+            }
+            if (_lives == 2)
+            {
+                _rightWingDamaged.SetActive(false);
+            }
         }
+    }
+
+    IEnumerator RepairVisual()
+    {
+        _repair.SetActive(true);
+        yield return new WaitForSeconds(.5f);
+        _repair.SetActive(false);
     }
 
     public void Damage()
