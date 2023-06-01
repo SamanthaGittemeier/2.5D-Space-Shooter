@@ -15,6 +15,7 @@ TagManager:
   - Game Manager
   - Play Button
   - Enemy Laser
+  - Shockwave
   layers:
   - Default
   - TransparentFX

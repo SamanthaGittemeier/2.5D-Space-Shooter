@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     private float _enemyCanFire = -1f;
 
     [SerializeField]
+    private bool _allowedToFire;
+
+    [SerializeField]
     private Player _player;
 
     [SerializeField]
@@ -33,6 +36,7 @@ public class Enemy : MonoBehaviour
         _enemyAudio = gameObject.GetComponent<AudioSource>();
         _enemyCollider = gameObject.GetComponent<Collider2D>();
         _enemyRB = gameObject.GetComponent<Rigidbody2D>();
+        _allowedToFire = true;
     }
 
     void Update()
@@ -58,7 +62,7 @@ public class Enemy : MonoBehaviour
 
     public void FireBack()
     {
-        if (Time.time > _enemyCanFire)
+        if (Time.time > _enemyCanFire && _allowedToFire == true)
         {
             _enemyFireRate = Random.Range(3f, 7f);
             _enemyCanFire = Time.time + _enemyFireRate;
@@ -99,5 +103,26 @@ public class Enemy : MonoBehaviour
             Destroy(_enemyRB);
             Destroy(this.gameObject, 1.25f);
         }
+        if (collision.tag == "Shockwave")
+        {
+            CannotFire();
+            _player.KilledEnemy(10);
+            _enemySpeed = 0;
+            _enemyAnimator.SetTrigger("OnEnemyDeath");
+            _enemyAudio.Play();
+            Destroy(_enemyCollider);
+            Destroy(_enemyRB);
+            Destroy(this.gameObject, 1.25f);
+        }
+    }
+
+    public void CannotFire()
+    {
+        _allowedToFire = false;
+    }
+
+    public void FireAgain()
+    {
+        _allowedToFire = true;
     }
 }

@@ -10,10 +10,17 @@ public class PowerUp : MonoBehaviour
     [SerializeField]     //0 = Triple Shot 1 = Speed 2 = Shield
     private int _powerupID;
 
+    [SerializeField]
+    private Collider2D _powerupCollider;
+
+    [SerializeField]
+    private Rigidbody2D _powerupRigidbody;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _powerupCollider = this.gameObject.GetComponent<Collider2D>();
+        _powerupRigidbody = this.gameObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -49,25 +56,29 @@ public class PowerUp : MonoBehaviour
                     case 0:
                         player.FoundTripleShotPowerup();
                         Debug.Log("Triple Shot Picked Up");
+                        Destroy(this.gameObject);
                         break;
                     case 1:
                         player.FoundSpeedBoost();
                         Debug.Log("Speed Boost Acquired");
+                        Destroy(this.gameObject);
                         break;
                     case 2:
                         player.FoundShield();
                         Debug.Log("Shields Found");
+                        Destroy(this.gameObject);
                         break;
                     case 3:
                         player.FoundAmmo();
                         Debug.Log("Found Ammo");
+                        Destroy(this.gameObject);
                         break;
                     case 4:
                         player.FoundHealth();
                         Debug.Log("Extra Life");
+                        Destroy(this.gameObject);
                         break;
                 }
-                Destroy(this.gameObject);
             }
         }
     }

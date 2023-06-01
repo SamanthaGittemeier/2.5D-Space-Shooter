@@ -20,6 +20,9 @@ public class Asteroid : MonoBehaviour
     private SpawnManager _spawnManager;
 
     [SerializeField]
+    private AtomBombPowerup _atomBombSpawner;
+
+    [SerializeField]
     private Collider2D _asteroidCollider;
 
     [SerializeField]
@@ -56,6 +59,7 @@ public class Asteroid : MonoBehaviour
             if (_asteroidDetroyed == true)
             {
                 _spawnManager.StartSpawning();
+                _atomBombSpawner.SpawnAtomBomb();
             }
         }
     }

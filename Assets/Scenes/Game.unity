@@ -552,7 +552,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &449908223
 GameObject:
@@ -695,9 +695,12 @@ MonoBehaviour:
   _haveTripleShot: 0
   _haveSpeedBoost: 0
   _haveShield: 0
+  _stopShooting: 0
   _laserPrefab: {fileID: 1850022061620374743, guid: 2009b9091f961b74dae35cbb7f8da50f,
     type: 3}
   _tripleShotPrefab: {fileID: 1717892942798688155, guid: 7994ac47908530a4781af575925e1f0e,
+    type: 3}
+  _shockwavePrefab: {fileID: 6541476094374355090, guid: c1e6cdc689c90e44f9da6b83d078abae,
     type: 3}
   _shield: {fileID: 0}
   _leftWingDamaged: {fileID: 0}
@@ -711,6 +714,7 @@ MonoBehaviour:
   _shieldAnimator: {fileID: 0}
   _gameManager: {fileID: 0}
   _spawnManager: {fileID: 0}
+  _atomBombSpawner: {fileID: 0}
   _uiManager: {fileID: 0}
 --- !u!212 &460780143
 SpriteRenderer:
@@ -770,7 +774,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460780141}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -3, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 449908224}
@@ -1462,6 +1466,75 @@ Transform:
   m_Father: {fileID: 1039154339}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1011267957
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2902668304917059382, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_Name
+      value: Atom Bomb Powerup
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902668304917059384, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902668304917059384, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902668304917059384, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902668304917059384, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902668304917059384, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902668304917059384, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902668304917059384, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902668304917059384, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902668304917059384, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902668304917059384, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902668304917059384, guid: 7a4a9a08de886c540bdd851a25ca65e9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7a4a9a08de886c540bdd851a25ca65e9, type: 3}
 --- !u!1 &1029157189
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,6 +1646,8 @@ MonoBehaviour:
     type: 3}
   _enemyContainer: {fileID: 0}
   _powerupContainer: {fileID: 0}
+  _rarePowerups:
+  - {fileID: 2902668304917059382, guid: 7a4a9a08de886c540bdd851a25ca65e9, type: 3}
   _powerups:
   - {fileID: 8910741085410138145, guid: eb79251660680f347b12adfe4bf62fd2, type: 3}
   - {fileID: 8380429958325602506, guid: 97626f53d0f71504f9cbbd8fca647185, type: 3}
@@ -1654,7 +1729,7 @@ Transform:
   m_Children:
   - {fileID: 1760415754}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1342378241
 GameObject:

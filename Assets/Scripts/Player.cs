@@ -22,11 +22,15 @@ public class Player : MonoBehaviour
     private bool _haveSpeedBoost;
     [SerializeField]
     private bool _haveShield;
+    [SerializeField]
+    private bool _stopShooting;
 
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
+    [SerializeField]
+    private GameObject _shockwavePrefab;
     [SerializeField]
     private GameObject _shield;
     [SerializeField]
@@ -57,6 +61,9 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
 
     [SerializeField]
+    private AtomBombPowerup _atomBombSpawner;
+
+    [SerializeField]
     private UIManager _uiManager;
 
     void Start()
@@ -81,6 +88,7 @@ public class Player : MonoBehaviour
         _ammoCount = 15;
         _repair = GameObject.Find("Repair");
         _repair.gameObject.SetActive(false);
+        _stopShooting = false;
     }
 
     void Update()
@@ -123,7 +131,7 @@ public class Player : MonoBehaviour
 
     void ShootLaser()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == true && Time.time > _canFire && _ammoCount != 0)
+        if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == true && Time.time > _canFire && _ammoCount != 0 && _stopShooting == false)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
             _canFire = Time.time + _fireRate;
@@ -131,7 +139,7 @@ public class Player : MonoBehaviour
             _ammoCount--;
             _uiManager.UpdateAmmo(_ammoCount);
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == false && Time.time > _canFire && _ammoCount != 0)
+        else if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == false && Time.time > _canFire && _ammoCount != 0 && _stopShooting == false)
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             _canFire = Time.time + _fireRate;
@@ -240,6 +248,7 @@ public class Player : MonoBehaviour
         if (_lives <= 0)
         {
             _spawnManager.OnPlayerDeath();
+            _atomBombSpawner.PlayerDied();
             Destroy(GameObject.FindWithTag("Triple Shot Powerup"));
             _playerExplosionAudio.Play();
             _playerExplodeAnimation.SetTrigger("PlayerDead");
