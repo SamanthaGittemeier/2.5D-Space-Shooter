@@ -67,6 +67,13 @@ public class Laser : MonoBehaviour
         {
             Debug.Log("Hit Player");
             _player.Damage();
+            Destroy(this.gameObject);
+        }
+        
+        if (collision.tag == "Shockwave")
+        {
+            Debug.Log("Atom Bomb!");
+            Destroy(this.gameObject);
         }
     }
 }

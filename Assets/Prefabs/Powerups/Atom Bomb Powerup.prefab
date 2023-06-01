@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2902668304917059385}
   - component: {fileID: -8574563020790958192}
   - component: {fileID: 2277692819574139130}
-  - component: {fileID: 4019860251347196140}
+  - component: {fileID: -6054260610693884557}
   m_Layer: 0
   m_Name: Atom Bomb Powerup
   m_TagString: Untagged
@@ -141,7 +141,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4019860251347196140
+--- !u!114 &-6054260610693884557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,8 +154,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shockwavePrefab: {fileID: 0}
-  _atomBombContainer: {fileID: 0}
   _pickupCollider: {fileID: 0}
   _pickupRigidbody: {fileID: 0}
-  _stopSpawningAtomBomb: 0
   _randomSpawnTime: 0
+  _atomBombAnimator: {fileID: 0}
+  _atomBombPlayer: {fileID: 0}
+  _atomBombEnemy: {fileID: 0}
+  _atomBombSpawnManager: {fileID: 0}

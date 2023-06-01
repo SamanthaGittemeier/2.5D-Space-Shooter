@@ -17,6 +17,7 @@ public class SpawnManager : MonoBehaviour
 
     private float _enemyRandomX;
     private float _powerupRandomX;
+    private float _rarePowerupSpawnTime;
 
     private bool _stopSpawningEnemies;
     private bool _stopSpawningPowerups;
@@ -36,6 +37,7 @@ public class SpawnManager : MonoBehaviour
     {
         StartCoroutine(SpawnEnemies());
         StartCoroutine(SpawnPowerups());
+        StartCoroutine(SpawnRarePowerup());
     }
 
     IEnumerator SpawnEnemies()
@@ -69,6 +71,36 @@ public class SpawnManager : MonoBehaviour
         {
             StopCoroutine(SpawnPowerups());
         }
+    }
+
+    public IEnumerator SpawnRarePowerup()
+    {
+        yield return new WaitForSeconds(2f);
+        while (_stopSpawningPowerups == false)
+        {
+            _rarePowerupSpawnTime = Random.Range(10f, 30f);
+            yield return new WaitForSeconds(_rarePowerupSpawnTime);
+            int randomRarePowerups = Random.Range(0, _rarePowerups.Length);
+            GameObject NewRarePowerup = Instantiate(_rarePowerups[randomRarePowerups], new Vector3(0, 0, 0), Quaternion.identity);
+            NewRarePowerup.transform.parent = _powerupContainer.transform;
+            yield return new WaitForSeconds(_rarePowerupSpawnTime);
+        }
+        if (_stopSpawningPowerups == true)
+        {
+            StopCoroutine(SpawnRarePowerup());
+        }
+    }
+
+    public void CallToPauseSpawning()
+    {
+        StartCoroutine(PauseSpawning());
+    }
+
+    IEnumerator PauseSpawning()
+    {
+        StopAllCoroutines();
+        yield return new WaitForSeconds(5f);
+        StartSpawning();
     }
 
     public void OnPlayerDeath()

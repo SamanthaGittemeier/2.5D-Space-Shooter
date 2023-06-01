@@ -105,9 +105,7 @@ public class Enemy : MonoBehaviour
         }
         if (collision.tag == "Shockwave")
         {
-            CannotFire();
             _player.KilledEnemy(10);
-            _enemySpeed = 0;
             _enemyAnimator.SetTrigger("OnEnemyDeath");
             _enemyAudio.Play();
             Destroy(_enemyCollider);
@@ -116,13 +114,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void CannotFire()
+    public void AtomBombAwakens()
     {
-        _allowedToFire = false;
+        StartCoroutine(AtomBombIncoming());
     }
 
-    public void FireAgain()
+    IEnumerator AtomBombIncoming()
     {
+        yield return new WaitForSeconds(2.5f);
+        _enemySpeed = 0;
+        _allowedToFire = false;
+        yield return new WaitForSeconds(5f);
+        _enemySpeed = 2f;
         _allowedToFire = true;
     }
 }

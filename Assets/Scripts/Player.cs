@@ -41,6 +41,8 @@ public class Player : MonoBehaviour
     private GameObject _playerThruster;
     [SerializeField]
     private GameObject _repair;
+    [SerializeField]
+    private GameObject _atomBombContainer;
 
     [SerializeField]
     private AudioSource _laserAudio;
@@ -59,9 +61,6 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private SpawnManager _spawnManager;
-
-    [SerializeField]
-    private AtomBombPowerup _atomBombSpawner;
 
     [SerializeField]
     private UIManager _uiManager;
@@ -89,6 +88,7 @@ public class Player : MonoBehaviour
         _repair = GameObject.Find("Repair");
         _repair.gameObject.SetActive(false);
         _stopShooting = false;
+        _atomBombContainer = GameObject.Find("AtomBombContainer");
     }
 
     void Update()
@@ -147,6 +147,28 @@ public class Player : MonoBehaviour
             _ammoCount--;
             _uiManager.UpdateAmmo(_ammoCount);
         }
+    }
+
+    public void FoundAtomBomb()
+    {
+        StartCoroutine(AtomBombExploding());
+    }
+
+    IEnumerator AtomBombExploding()
+    {
+        yield return new WaitForSeconds(2.5f);
+        GameObject NewAtomBomb = Instantiate(_shockwavePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        NewAtomBomb.transform.parent = _atomBombContainer.transform;
+        _speed = 0;
+        _stopShooting = true;
+        yield return new WaitForSeconds(5f);
+        _speed = 5f;
+        _stopShooting = false;
+        if (_atomBombContainer.transform.childCount > 0)
+        {
+            Destroy(_atomBombContainer.gameObject.transform.GetChild(0));
+        }
+        StopCoroutine(AtomBombExploding());
     }
 
     public void FoundTripleShotPowerup()
@@ -248,7 +270,6 @@ public class Player : MonoBehaviour
         if (_lives <= 0)
         {
             _spawnManager.OnPlayerDeath();
-            _atomBombSpawner.PlayerDied();
             Destroy(GameObject.FindWithTag("Triple Shot Powerup"));
             _playerExplosionAudio.Play();
             _playerExplodeAnimation.SetTrigger("PlayerDead");

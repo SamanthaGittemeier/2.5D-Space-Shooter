@@ -16,6 +16,7 @@ TagManager:
   - Play Button
   - Enemy Laser
   - Shockwave
+  - Atom Bomb Container
   layers:
   - Default
   - TransparentFX
