@@ -115,9 +115,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void AtomBombIncoming()
+    public void FreezeEnemy()
     {
-        _enemySpeed = 0;
+        _enemySpeed = 0f;
         _allowedToFire = false;
     }
 }

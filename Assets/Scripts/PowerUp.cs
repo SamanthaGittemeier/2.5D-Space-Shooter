@@ -85,6 +85,6 @@ public class PowerUp : MonoBehaviour
     {
         _powerupSpeed = 0;
         yield return new WaitForSeconds(5f);
-        _powerupSpeed = default;
+        _powerupSpeed = 3f;
     }
 }

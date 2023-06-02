@@ -21,9 +21,6 @@ public class AtomBombPowerup : MonoBehaviour
     private Rigidbody2D _parentRigidbody;
 
     [SerializeField]
-    private float _randomSpawnTime;
-
-    [SerializeField]
     private Player _player;
 
     [SerializeField]
@@ -87,7 +84,7 @@ public class AtomBombPowerup : MonoBehaviour
         _currentEnemies = GameObject.FindObjectsOfType<Enemy>();
         foreach (Enemy target in _currentEnemies)
         {
-            target.AtomBombIncoming();
+            target.FreezeEnemy();
         }
     }
 

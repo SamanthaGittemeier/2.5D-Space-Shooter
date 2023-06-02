@@ -78,7 +78,7 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         while (_stopSpawningPowerups == false)
         {
-            _rarePowerupSpawnTime = Random.Range(5f, 20f);
+            _rarePowerupSpawnTime = Random.Range(5f, 15f);
             yield return new WaitForSeconds(_rarePowerupSpawnTime);
             int randomRarePowerups = Random.Range(0, _rarePowerups.Length);
             GameObject NewRarePowerup = Instantiate(_rarePowerups[randomRarePowerups], new Vector3(0, 0, 0), Quaternion.identity);
