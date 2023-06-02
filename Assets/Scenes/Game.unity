@@ -700,14 +700,11 @@ MonoBehaviour:
     type: 3}
   _tripleShotPrefab: {fileID: 1717892942798688155, guid: 7994ac47908530a4781af575925e1f0e,
     type: 3}
-  _shockwavePrefab: {fileID: 6541476094374355090, guid: c1e6cdc689c90e44f9da6b83d078abae,
-    type: 3}
   _shield: {fileID: 0}
   _leftWingDamaged: {fileID: 0}
   _rightWingDamaged: {fileID: 0}
   _playerThruster: {fileID: 0}
   _repair: {fileID: 0}
-  _atomBombContainer: {fileID: 0}
   _laserAudio: {fileID: 0}
   _playerExplosionAudio: {fileID: 0}
   _powerupAudio: {fileID: 0}
@@ -774,7 +771,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460780141}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3, z: 0}
+  m_LocalPosition: {x: 0, y: -4, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 449908224}
@@ -1578,7 +1575,7 @@ MonoBehaviour:
   _enemyContainer: {fileID: 0}
   _powerupContainer: {fileID: 0}
   _rarePowerups:
-  - {fileID: 2902668304917059382, guid: 7a4a9a08de886c540bdd851a25ca65e9, type: 3}
+  - {fileID: 8644433531738500764, guid: 7a4a9a08de886c540bdd851a25ca65e9, type: 3}
   _powerups:
   - {fileID: 8910741085410138145, guid: eb79251660680f347b12adfe4bf62fd2, type: 3}
   - {fileID: 8380429958325602506, guid: 97626f53d0f71504f9cbbd8fca647185, type: 3}
@@ -1598,7 +1595,6 @@ Transform:
   m_Children:
   - {fileID: 1135641783}
   - {fileID: 1002273527}
-  - {fileID: 1583182542}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1737,36 +1733,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1342378241}
   m_CullTransparentMesh: 0
---- !u!1 &1583182541
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1583182542}
-  m_Layer: 0
-  m_Name: AtomBombContainer
-  m_TagString: Atom Bomb Container
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1583182542
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1583182541}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1039154339}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1601890599
 GameObject:
   m_ObjectHideFlags: 0

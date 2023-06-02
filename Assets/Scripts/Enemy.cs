@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
         _enemyCollider = gameObject.GetComponent<Collider2D>();
         _enemyRB = gameObject.GetComponent<Rigidbody2D>();
         _allowedToFire = true;
+        _enemySpeed = 2f;
     }
 
     void Update()
@@ -114,18 +115,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void AtomBombAwakens()
+    public void AtomBombIncoming()
     {
-        StartCoroutine(AtomBombIncoming());
-    }
-
-    IEnumerator AtomBombIncoming()
-    {
-        yield return new WaitForSeconds(2.5f);
         _enemySpeed = 0;
         _allowedToFire = false;
-        yield return new WaitForSeconds(5f);
-        _enemySpeed = 2f;
-        _allowedToFire = true;
     }
 }

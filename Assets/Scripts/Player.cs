@@ -30,8 +30,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
-    private GameObject _shockwavePrefab;
-    [SerializeField]
     private GameObject _shield;
     [SerializeField]
     private GameObject _leftWingDamaged;
@@ -41,8 +39,6 @@ public class Player : MonoBehaviour
     private GameObject _playerThruster;
     [SerializeField]
     private GameObject _repair;
-    [SerializeField]
-    private GameObject _atomBombContainer;
 
     [SerializeField]
     private AudioSource _laserAudio;
@@ -67,7 +63,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        transform.position = new Vector3(0, -3, 0);
+        transform.position = new Vector3(0, -4, 0);
         _spawnManager = GameObject.FindGameObjectWithTag("Spawn Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
@@ -88,7 +84,6 @@ public class Player : MonoBehaviour
         _repair = GameObject.Find("Repair");
         _repair.gameObject.SetActive(false);
         _stopShooting = false;
-        _atomBombContainer = GameObject.Find("AtomBombContainer");
     }
 
     void Update()
@@ -151,24 +146,16 @@ public class Player : MonoBehaviour
 
     public void FoundAtomBomb()
     {
-        StartCoroutine(AtomBombExploding());
+        StartCoroutine(FreezePlayer());
     }
 
-    IEnumerator AtomBombExploding()
+    IEnumerator FreezePlayer()
     {
-        yield return new WaitForSeconds(2.5f);
-        GameObject NewAtomBomb = Instantiate(_shockwavePrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        NewAtomBomb.transform.parent = _atomBombContainer.transform;
         _speed = 0;
         _stopShooting = true;
         yield return new WaitForSeconds(5f);
         _speed = 5f;
         _stopShooting = false;
-        if (_atomBombContainer.transform.childCount > 0)
-        {
-            Destroy(_atomBombContainer.gameObject.transform.GetChild(0));
-        }
-        StopCoroutine(AtomBombExploding());
     }
 
     public void FoundTripleShotPowerup()

@@ -5,38 +5,49 @@ using UnityEngine;
 public class AtomBombPowerup : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _shockwavePrefab;
+    private GameObject _pickup;
+    [SerializeField]
+    private GameObject _shockwave;
+    [SerializeField]
+    private GameObject _powerupContainer;
 
     [SerializeField]
-    private Collider2D _pickupCollider;
+    private Animator _pickupAnimator;
 
     [SerializeField]
-    private Rigidbody2D _pickupRigidbody;
+    private Collider2D _parentCollider;
+
+    [SerializeField]
+    private Rigidbody2D _parentRigidbody;
 
     [SerializeField]
     private float _randomSpawnTime;
 
     [SerializeField]
-    private Animator _atomBombAnimator;
+    private Player _player;
 
     [SerializeField]
-    private Player _atomBombPlayer;
+    private Enemy[] _currentEnemies;
 
     [SerializeField]
-    private Enemy _atomBombEnemy;
+    private PowerUp[] _currentPowerups;
 
     [SerializeField]
-    private SpawnManager _atomBombSpawnManager;
+    private SpawnManager _spawnManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        _pickupCollider = gameObject.GetComponent<Collider2D>();
-        _pickupRigidbody = gameObject.GetComponent<Rigidbody2D>();
-        _atomBombAnimator = gameObject.GetComponent<Animator>();
-        _atomBombPlayer = GameObject.Find("Player").GetComponent<Player>();
-        _atomBombEnemy = GameObject.Find("Enemy").GetComponent<Enemy>();
-        _atomBombSpawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
+        _shockwave = GameObject.Find("Shockwave");
+        _shockwave.SetActive(false);
+        _pickup = GameObject.Find("Pickup");
+        _pickupAnimator = _pickup.GetComponent<Animator>();
+        _parentCollider = gameObject.GetComponent<Collider2D>();
+        _parentRigidbody = gameObject.GetComponent<Rigidbody2D>();
+        _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
+        _powerupContainer = GameObject.Find("PowerupContainer");
+        gameObject.transform.parent = _powerupContainer.transform;
     }
 
     // Update is called once per frame
@@ -49,13 +60,43 @@ public class AtomBombPowerup : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            Destroy(_pickupCollider);
-            Destroy(_pickupRigidbody);
-            _atomBombAnimator.SetTrigger("SettingOff");
-            _atomBombPlayer.FoundAtomBomb();
-            _atomBombEnemy.AtomBombAwakens();
-            _atomBombSpawnManager.CallToPauseSpawning();
-            Destroy(this.gameObject, 3f);
+            StartCoroutine(AtomBomb());
+        }
+    }
+
+    IEnumerator AtomBomb()
+    {
+        _pickupAnimator.SetTrigger("SettingOff");
+        Destroy(_parentCollider);
+        Destroy(_parentRigidbody);
+        yield return new WaitForSeconds(2.5f);
+        _pickup.SetActive(false);
+        _shockwave.SetActive(true);
+        _spawnManager.CallToPauseSpawning();
+        _player.FoundAtomBomb();
+        DisableEnemies();
+        StopPowerups();
+        yield return new WaitForSeconds(5f);
+        Destroy(_pickup);
+        Destroy(_shockwave);
+        StopCoroutine(AtomBomb());
+    }
+
+    void DisableEnemies()
+    {
+        _currentEnemies = GameObject.FindObjectsOfType<Enemy>();
+        foreach (Enemy target in _currentEnemies)
+        {
+            target.AtomBombIncoming();
+        }
+    }
+
+    void StopPowerups()
+    {
+        _currentPowerups = GameObject.FindObjectsOfType<PowerUp>();
+        foreach (PowerUp powerup in _currentPowerups)
+        {
+            powerup.PausePowerups();
         }
     }
 }

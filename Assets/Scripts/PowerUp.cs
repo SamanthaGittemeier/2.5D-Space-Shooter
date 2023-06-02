@@ -10,17 +10,10 @@ public class PowerUp : MonoBehaviour
     [SerializeField]     //0 = Triple Shot 1 = Speed 2 = Shield
     private int _powerupID;
 
-    [SerializeField]
-    private Collider2D _powerupCollider;
-
-    [SerializeField]
-    private Rigidbody2D _powerupRigidbody;
-
     // Start is called before the first frame update
     void Start()
     {
-        _powerupCollider = this.gameObject.GetComponent<Collider2D>();
-        _powerupRigidbody = this.gameObject.GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
@@ -81,5 +74,17 @@ public class PowerUp : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void PausePowerups()
+    {
+        StartCoroutine(FreezePowerups());
+    }
+
+    IEnumerator FreezePowerups()
+    {
+        _powerupSpeed = 0;
+        yield return new WaitForSeconds(5f);
+        _powerupSpeed = default;
     }
 }
