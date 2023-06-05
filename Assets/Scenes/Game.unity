@@ -494,7 +494,7 @@ MonoBehaviour:
   _fuelBarAnim: {fileID: 0}
   _currentClipName: 
   _currentClipTime: 0
-  _currentClipLength: 0
+  _camera: {fileID: 0}
 --- !u!4 &225782709
 Transform:
   m_ObjectHideFlags: 0
@@ -2119,6 +2119,7 @@ GameObject:
   - component: {fileID: 1936881366}
   - component: {fileID: 1936881365}
   - component: {fileID: 1936881368}
+  - component: {fileID: 1936881369}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2251,6 +2252,25 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!95 &1936881369
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936881364}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7f24bc9356a534247958fadbf7a2bd88, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1944386736
 GameObject:
   m_ObjectHideFlags: 0

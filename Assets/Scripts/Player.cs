@@ -51,6 +51,8 @@ public class Player : MonoBehaviour
     private Animator _playerExplodeAnimation;
     [SerializeField]
     private Animator _shieldAnimator;
+    [SerializeField]
+    private Animator _cameraAnimator;
 
     [SerializeField]
     private GameManager _gameManager;
@@ -84,6 +86,7 @@ public class Player : MonoBehaviour
         _repair = GameObject.Find("Repair");
         _repair.gameObject.SetActive(false);
         _stopShooting = false;
+        _cameraAnimator = GameObject.Find("Main Camera").GetComponent<Animator>();
     }
 
     void Update()
@@ -242,6 +245,7 @@ public class Player : MonoBehaviour
         }
 
         _lives--;
+        StartCoroutine(CameraShake());
         _uiManager.UpdateLives(_lives);
 
         if(_lives <= 2)
@@ -284,6 +288,13 @@ public class Player : MonoBehaviour
             _shield.SetActive(false);
             _haveShield = false;
         }
+    }
+
+    IEnumerator CameraShake()
+    {
+        _cameraAnimator.SetBool("ShakeTheCamera", true);
+        yield return new WaitForSeconds(0.1f);
+        _cameraAnimator.SetBool("ShakeTheCamera", false);
     }
 
     public void KilledEnemy(int _points)
