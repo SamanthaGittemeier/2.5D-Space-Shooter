@@ -15,9 +15,13 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject[] _powerups;
 
-    private float _enemyRandomX;
     private float _powerupRandomX;
     private float _rarePowerupSpawnTime;
+    private float _enemyRandomY;
+    private float _enemyRandomX;
+
+    [SerializeField]
+    private int _chooseEnemyMovement;
 
     private bool _stopSpawningEnemies;
     private bool _stopSpawningPowerups;
@@ -30,7 +34,8 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-        
+        _enemyRandomX = Random.Range(-9.44f, 9.48f);
+        _enemyRandomY = Random.Range(4.7f, 0f);
     }
 
     public void StartSpawning()
@@ -45,9 +50,19 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         while (_stopSpawningEnemies == false)
         {
-            _enemyRandomX = Random.Range(-9.44f, 9.48f);
-            GameObject NewEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(_enemyRandomX, 6.93f, 0), Quaternion.identity);
-            NewEnemy.transform.parent = _enemyContainer.transform;
+            _chooseEnemyMovement = Random.Range(0, 2);
+            Debug.Log(_chooseEnemyMovement);
+            GameObject newEnemy = null;
+            if (_chooseEnemyMovement == 0)
+            {
+                newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(_enemyRandomX, 6.93f, 0), Quaternion.identity);
+            }
+            else if (_chooseEnemyMovement == 1)
+            {
+                newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(-9.44f, _enemyRandomY, 0), Quaternion.identity);
+            }
+            newEnemy.GetComponent<Enemy>().EnemyID(_chooseEnemyMovement);
+            newEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(2.5f);
         }
         if (_stopSpawningEnemies == true)
@@ -78,7 +93,7 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         while (_stopSpawningPowerups == false)
         {
-            _rarePowerupSpawnTime = Random.Range(5f, 15f);
+            _rarePowerupSpawnTime = Random.Range(180f, 300f);
             yield return new WaitForSeconds(_rarePowerupSpawnTime);
             int randomRarePowerups = Random.Range(0, _rarePowerups.Length);
             GameObject NewRarePowerup = Instantiate(_rarePowerups[randomRarePowerups], new Vector3(0, 0, 0), Quaternion.identity);

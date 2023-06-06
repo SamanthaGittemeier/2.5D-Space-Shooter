@@ -7,6 +7,13 @@ public class Enemy : MonoBehaviour
     private float _enemySpeed = 2f;
     private float _enemyFireRate;
     private float _enemyCanFire = -1f;
+    [SerializeField]
+    private float _randomX;
+    [SerializeField]
+    private float _randomY;
+
+    [SerializeField]
+    private int _enemyID;
 
     [SerializeField]
     private bool _allowedToFire;
@@ -29,6 +36,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _enemyLaserPrefab;
 
+    [SerializeField]
+    private SpawnManager _spawnManager;
+
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -38,26 +48,20 @@ public class Enemy : MonoBehaviour
         _enemyRB = gameObject.GetComponent<Rigidbody2D>();
         _allowedToFire = true;
         _enemySpeed = 2f;
+        _randomX = Random.Range(-9.44f, 9.48f);
+        _randomY = Random.Range(4.7f, 0f);
     }
 
     void Update()
     {
-        MoveDown();
-        Respawn();
         FireBack();
-    }
-
-    void MoveDown()
-    {
-        transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
-    }
-
-    public void Respawn()
-    {
-        if (transform.position.y <= -5.36f)
+        if (_enemyID == 0)
         {
-            float RandomX = Random.Range(-9.47f, 9.47f);
-            transform.position = new Vector3(RandomX, 6.93f, 0);
+            MoveDown();
+        }
+        else if (_enemyID == 1)
+        {
+            MoveRight();
         }
     }
 
@@ -74,6 +78,31 @@ public class Enemy : MonoBehaviour
                 _lasers[i].AssignToEnemy();
             }
         }
+    }
+
+    public void MoveDown()
+    {
+        Debug.Log("Called to Move Down");
+        transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
+        if (transform.position.y <= -5.36f)
+        {
+            transform.position = new Vector3(_randomX, 6.93f, 0);
+        }
+    }
+
+    public void MoveRight()
+    {
+        Debug.Log("Called to Move Right");
+        transform.Translate(Vector3.right * _enemySpeed * Time.deltaTime);
+        if (transform.position.x >= 11.1f)
+        {
+            transform.position = new Vector3(-9.44f, _randomY, 0);
+        }
+    }
+
+    public void EnemyID(int ID)
+    {
+        _enemyID = ID;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

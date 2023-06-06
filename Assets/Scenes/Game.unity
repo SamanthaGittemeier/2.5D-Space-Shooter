@@ -494,7 +494,6 @@ MonoBehaviour:
   _fuelBarAnim: {fileID: 0}
   _currentClipName: 
   _currentClipTime: 0
-  _camera: {fileID: 0}
 --- !u!4 &225782709
 Transform:
   m_ObjectHideFlags: 0
@@ -784,7 +783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _lives: 3
+  _lives: 999
   _score: 0
   _ammoCount: 0
   _haveTripleShot: 0
@@ -805,6 +804,7 @@ MonoBehaviour:
   _powerupAudio: {fileID: 0}
   _playerExplodeAnimation: {fileID: 0}
   _shieldAnimator: {fileID: 0}
+  _cameraAnimator: {fileID: 0}
   _gameManager: {fileID: 0}
   _spawnManager: {fileID: 0}
   _uiManager: {fileID: 0}
@@ -1677,6 +1677,9 @@ MonoBehaviour:
   - {fileID: 7594849171169589717, guid: f69da0874a114194ab1ebf261cbd6cc3, type: 3}
   - {fileID: 1977596298226549735, guid: fa05d21bb57272449a09d2f9f36abfce, type: 3}
   - {fileID: 1786542765350160882, guid: ac36f045522ee024f83f5921ec09b621, type: 3}
+  _chooseEnemyMovement: 0
+  _enemyScript: {fileID: 893772834724025576, guid: a6f09e5e04d790a4690a24e1ea151214,
+    type: 3}
 --- !u!4 &1039154339
 Transform:
   m_ObjectHideFlags: 0
