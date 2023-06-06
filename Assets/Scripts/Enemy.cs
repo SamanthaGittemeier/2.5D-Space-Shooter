@@ -36,9 +36,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _enemyLaserPrefab;
 
-    [SerializeField]
-    private SpawnManager _spawnManager;
-
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();

@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     private Text _restartText;
     [SerializeField]
     private Text _ammoCountText;
+    [SerializeField]
+    private Text _maxAmmoText;
 
     [SerializeField]
     private Sprite[] _livesSprite;
@@ -39,6 +41,7 @@ public class UIManager : MonoBehaviour
         _ammoCountWhite = GameObject.Find("Ammo Count White");
         _ammoCountRed = GameObject.Find("Ammo Count Red");
         _ammoCountRed.SetActive(false);
+        _maxAmmoText = GameObject.Find("Max Ammo Text").GetComponent<Text>();
     }
 
     public void UpdateScore(int _playerScore)
@@ -59,6 +62,11 @@ public class UIManager : MonoBehaviour
             _ammoCountWhite.SetActive(true);
             _ammoCountRed.SetActive(false);
         }
+    }
+
+    public void UpdateMaxAmmo(int _maxAmmo)
+    {
+        _maxAmmoText.text = "/ " + _maxAmmo.ToString();
     }
 
     public void UpdateLives(int _currentLives)

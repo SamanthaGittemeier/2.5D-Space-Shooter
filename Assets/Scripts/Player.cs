@@ -15,6 +15,10 @@ public class Player : MonoBehaviour
     private int _score;
     [SerializeField]
     private int _ammoCount;
+    [SerializeField]
+    private int _maxAmmo;
+    [SerializeField]
+    private int _ammoGap;
 
     [SerializeField]
     private bool _haveTripleShot;
@@ -87,6 +91,7 @@ public class Player : MonoBehaviour
         _repair.gameObject.SetActive(false);
         _stopShooting = false;
         _cameraAnimator = GameObject.Find("Main Camera").GetComponent<Animator>();
+        _maxAmmo = 60;
     }
 
     void Update()
@@ -94,6 +99,8 @@ public class Player : MonoBehaviour
         PlayerMovement();
         PlayerBounds();
         ShootLaser();
+        _ammoGap = _maxAmmo - _ammoCount;
+        _uiManager.UpdateMaxAmmo(_maxAmmo);
     }
 
     void PlayerMovement()
@@ -204,7 +211,17 @@ public class Player : MonoBehaviour
 
     public void FoundAmmo()
     {
-        _ammoCount = _ammoCount + 15;
+        if (_ammoCount < _maxAmmo)
+        {
+            if (_ammoCount + 15 > _maxAmmo)
+            {
+                _ammoCount = _ammoCount + _ammoGap;
+            }
+            else
+            {
+                _ammoCount = _ammoCount + 15;
+            }
+        }
         _powerupAudio.Play();
         _uiManager.UpdateAmmo(_ammoCount);
     }

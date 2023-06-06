@@ -400,7 +400,7 @@ RectTransform:
   m_LocalScale: {x: 0.7, y: 0.58, z: 1}
   m_Children: []
   m_Father: {fileID: 2108497382}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -783,9 +783,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _lives: 999
+  _lives: 3
   _score: 0
   _ammoCount: 0
+  _maxAmmo: 0
+  _ammoGap: 0
   _haveTripleShot: 0
   _haveSpeedBoost: 0
   _haveShield: 0
@@ -1678,8 +1680,6 @@ MonoBehaviour:
   - {fileID: 1977596298226549735, guid: fa05d21bb57272449a09d2f9f36abfce, type: 3}
   - {fileID: 1786542765350160882, guid: ac36f045522ee024f83f5921ec09b621, type: 3}
   _chooseEnemyMovement: 0
-  _enemyScript: {fileID: 893772834724025576, guid: a6f09e5e04d790a4690a24e1ea151214,
-    type: 3}
 --- !u!4 &1039154339
 Transform:
   m_ObjectHideFlags: 0
@@ -1787,7 +1787,7 @@ RectTransform:
   m_LocalScale: {x: 0.3448276, y: 0.3448276, z: 0.3448276}
   m_Children: []
   m_Father: {fileID: 2108497382}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1861,7 +1861,7 @@ RectTransform:
   m_LocalScale: {x: 0.75000006, y: 0.75000006, z: 0.75000006}
   m_Children: []
   m_Father: {fileID: 2108497382}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -1982,6 +1982,84 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601890599}
+  m_CullTransparentMesh: 0
+--- !u!1 &1685009444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1685009445}
+  - component: {fileID: 1685009447}
+  - component: {fileID: 1685009446}
+  m_Layer: 5
+  m_Name: Max Ammo Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1685009445
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685009444}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2108497382}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 125, y: 40}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1685009446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685009444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 25
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: / 60
+--- !u!222 &1685009447
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685009444}
   m_CullTransparentMesh: 0
 --- !u!1 &1760415753
 GameObject:
@@ -2378,7 +2456,7 @@ RectTransform:
   m_LocalScale: {x: 0.3448276, y: 0.3448276, z: 0.3448276}
   m_Children: []
   m_Father: {fileID: 2108497382}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2663,6 +2741,7 @@ MonoBehaviour:
   _gameOverText: {fileID: 0}
   _restartText: {fileID: 0}
   _ammoCountText: {fileID: 0}
+  _maxAmmoText: {fileID: 0}
   _livesSprite:
   - {fileID: 21300000, guid: ba53e111f0125654cabfd4eefaf3a657, type: 3}
   - {fileID: 21300000, guid: 80fba5ece7697c44eacc036539c1b552, type: 3}
@@ -2747,6 +2826,7 @@ RectTransform:
   - {fileID: 481835579}
   - {fileID: 2093591684}
   - {fileID: 1601890600}
+  - {fileID: 1685009445}
   - {fileID: 1342378242}
   - {fileID: 2092109955}
   - {fileID: 189461717}
