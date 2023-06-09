@@ -1680,6 +1680,13 @@ MonoBehaviour:
   - {fileID: 1977596298226549735, guid: fa05d21bb57272449a09d2f9f36abfce, type: 3}
   - {fileID: 1786542765350160882, guid: ac36f045522ee024f83f5921ec09b621, type: 3}
   _chooseEnemyMovement: 0
+  _waveID: 0
+  _soldierID: 0
+  _wave1Spawns: []
+  _wave2Spawns: []
+  _wave3Spawns: []
+  _wave4Spawns: []
+  _wave5Spawns: []
 --- !u!4 &1039154339
 Transform:
   m_ObjectHideFlags: 0

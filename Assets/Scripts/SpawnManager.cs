@@ -22,6 +22,12 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField]
     private int _chooseEnemyMovement;
+    [SerializeField]
+    private int _waveID;
+    [SerializeField]
+    private int _waveSize;
+    [SerializeField]
+    private int _spawned;
 
     private bool _stopSpawningEnemies;
     private bool _stopSpawningPowerups;
@@ -30,6 +36,7 @@ public class SpawnManager : MonoBehaviour
     {
         _enemyContainer = GameObject.Find("EnemyContainer");
         _powerupContainer = GameObject.Find("PowerupContainer");
+        _waveID = 0;
     }
 
     void Update()
@@ -50,20 +57,55 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         while (_stopSpawningEnemies == false)
         {
-            _chooseEnemyMovement = Random.Range(0, 2);
-            Debug.Log(_chooseEnemyMovement);
-            GameObject newEnemy = null;
-            if (_chooseEnemyMovement == 0)
+            if (_spawned == 0)
             {
-                newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(_enemyRandomX, 6.93f, 0), Quaternion.identity);
+                switch (_waveID)
+                {
+                    case 0:
+                        _waveSize = 3;
+                        break;
+                    case 1:
+                        _waveSize = 5;
+                        break;
+                    case 2:
+                        _waveSize = 7;
+                        break;
+                    case 3:
+                        _waveSize = 10;
+                        break;
+                    case 4:
+                        _waveSize = 15;
+                        break;
+                }
+                for (int i = 0; i < _waveSize; i++)
+                {
+                    _chooseEnemyMovement = Random.Range(0, 3);
+                    Debug.Log(_chooseEnemyMovement);
+                    GameObject newEnemy = null;
+                    switch (_chooseEnemyMovement)
+                    {
+                        case 0:
+                            newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(_enemyRandomX, 6.93f, 0), Quaternion.identity);
+                            break;
+                        case 1:
+                            newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(-9.44f, _enemyRandomY, 0), Quaternion.identity);
+                            break;
+                        case 2:
+                            newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(9.44f, _enemyRandomY, 0), Quaternion.identity);
+                            break;
+                    }
+                    newEnemy.GetComponent<Enemy>().EnemyID(_chooseEnemyMovement);
+                    newEnemy.transform.parent = _enemyContainer.transform;
+                    _spawned++;
+                    yield return new WaitForSeconds(1);
+                }
             }
-            else if (_chooseEnemyMovement == 1)
+            if (_enemyContainer.transform.childCount == 0)
             {
-                newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(-9.44f, _enemyRandomY, 0), Quaternion.identity);
+                _waveID++;
+                _spawned = 0;
             }
-            newEnemy.GetComponent<Enemy>().EnemyID(_chooseEnemyMovement);
-            newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(2.5f);
+            yield return null;
         }
         if (_stopSpawningEnemies == true)
         {

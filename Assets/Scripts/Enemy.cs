@@ -52,13 +52,17 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         FireBack();
-        if (_enemyID == 0)
+        switch (_enemyID)
         {
-            MoveDown();
-        }
-        else if (_enemyID == 1)
-        {
-            MoveRight();
+            case 0:
+                MoveDown();
+                break;
+            case 1:
+                MoveRight();
+                break;
+            case 2:
+                MoveLeft();
+                break;
         }
     }
 
@@ -79,7 +83,6 @@ public class Enemy : MonoBehaviour
 
     public void MoveDown()
     {
-        Debug.Log("Called to Move Down");
         transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
         if (transform.position.y <= -5.36f)
         {
@@ -89,11 +92,19 @@ public class Enemy : MonoBehaviour
 
     public void MoveRight()
     {
-        Debug.Log("Called to Move Right");
         transform.Translate(Vector3.right * _enemySpeed * Time.deltaTime);
         if (transform.position.x >= 11.1f)
         {
             transform.position = new Vector3(-9.44f, _randomY, 0);
+        }
+    }
+
+    public void MoveLeft()
+    {
+        transform.Translate(Vector3.left * _enemySpeed * Time.deltaTime);
+        if (transform.position.x <= -11.1f)
+        {
+            transform.position = new Vector3(9.44f, _randomY, 0);
         }
     }
 
@@ -114,6 +125,7 @@ public class Enemy : MonoBehaviour
                 _player.KilledEnemy(10);
                 _enemyAnimator.SetTrigger("OnEnemyDeath");
                 _enemyAudio.Play();
+                _allowedToFire = false;
                 Destroy(_enemyCollider);
                 Destroy(_enemyRB);
                 Destroy(this.gameObject, 1.25f);
@@ -126,6 +138,7 @@ public class Enemy : MonoBehaviour
             _enemySpeed = 0;
             _enemyAnimator.SetTrigger("OnEnemyDeath");
             _enemyAudio.Play();
+            _allowedToFire = false;
             Destroy(_enemyCollider);
             Destroy(_enemyRB);
             Destroy(this.gameObject, 1.25f);
@@ -135,6 +148,7 @@ public class Enemy : MonoBehaviour
             _player.KilledEnemy(10);
             _enemyAnimator.SetTrigger("OnEnemyDeath");
             _enemyAudio.Play();
+            _allowedToFire = false;
             Destroy(_enemyCollider);
             Destroy(_enemyRB);
             Destroy(this.gameObject, 1.25f);
