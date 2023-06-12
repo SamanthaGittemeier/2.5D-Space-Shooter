@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
     private GameObject _playerThruster;
     [SerializeField]
     private GameObject _repair;
+    [SerializeField]
+    private GameObject _frozen;
 
     [SerializeField]
     private AudioSource _laserAudio;
@@ -92,6 +94,8 @@ public class Player : MonoBehaviour
         _stopShooting = false;
         _cameraAnimator = GameObject.Find("Main Camera").GetComponent<Animator>();
         _maxAmmo = 60;
+        _frozen = GameObject.Find("Frozen");
+        _frozen.gameObject.SetActive(false);
     }
 
     void Update()
@@ -166,6 +170,22 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _speed = 5f;
         _stopShooting = false;
+    }
+
+    public void FoundFreeze()
+    {
+        StartCoroutine(FrozenPlayer());
+    }
+
+    IEnumerator FrozenPlayer()
+    {
+        _speed = 0;
+        _stopShooting = true;
+        _frozen.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        _speed = 5f;
+        _stopShooting = false;
+        _frozen.gameObject.SetActive(false);
     }
 
     public void FoundTripleShotPowerup()

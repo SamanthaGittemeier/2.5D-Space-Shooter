@@ -71,6 +71,11 @@ public class PowerUp : MonoBehaviour
                         Debug.Log("Extra Life");
                         Destroy(this.gameObject);
                         break;
+                    case 5:
+                        player.FoundFreeze();
+                        Debug.Log("Player Is Frozen");
+                        Destroy(this.gameObject);
+                        break;
                 }
             }
         }
