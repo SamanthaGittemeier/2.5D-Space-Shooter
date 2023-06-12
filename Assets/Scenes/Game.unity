@@ -1676,12 +1676,22 @@ MonoBehaviour:
   _rarePowerups:
   - {fileID: 8644433531738500764, guid: 7a4a9a08de886c540bdd851a25ca65e9, type: 3}
   _powerups:
-  - {fileID: 8910741085410138145, guid: eb79251660680f347b12adfe4bf62fd2, type: 3}
-  - {fileID: 8380429958325602506, guid: 97626f53d0f71504f9cbbd8fca647185, type: 3}
-  - {fileID: 7594849171169589717, guid: f69da0874a114194ab1ebf261cbd6cc3, type: 3}
   - {fileID: 1977596298226549735, guid: fa05d21bb57272449a09d2f9f36abfce, type: 3}
-  - {fileID: 1786542765350160882, guid: ac36f045522ee024f83f5921ec09b621, type: 3}
+  - {fileID: 1977596298226549735, guid: fa05d21bb57272449a09d2f9f36abfce, type: 3}
+  - {fileID: 1977596298226549735, guid: fa05d21bb57272449a09d2f9f36abfce, type: 3}
+  - {fileID: 1977596298226549735, guid: fa05d21bb57272449a09d2f9f36abfce, type: 3}
+  - {fileID: 8910741085410138145, guid: eb79251660680f347b12adfe4bf62fd2, type: 3}
+  - {fileID: 8910741085410138145, guid: eb79251660680f347b12adfe4bf62fd2, type: 3}
+  - {fileID: 8910741085410138145, guid: eb79251660680f347b12adfe4bf62fd2, type: 3}
+  - {fileID: 7594849171169589717, guid: f69da0874a114194ab1ebf261cbd6cc3, type: 3}
+  - {fileID: 7594849171169589717, guid: f69da0874a114194ab1ebf261cbd6cc3, type: 3}
+  - {fileID: 7594849171169589717, guid: f69da0874a114194ab1ebf261cbd6cc3, type: 3}
   - {fileID: 2356393926595981223, guid: 79caf60fc4fdd0646b581e16a129ab62, type: 3}
+  - {fileID: 2356393926595981223, guid: 79caf60fc4fdd0646b581e16a129ab62, type: 3}
+  - {fileID: 2356393926595981223, guid: 79caf60fc4fdd0646b581e16a129ab62, type: 3}
+  - {fileID: 8380429958325602506, guid: 97626f53d0f71504f9cbbd8fca647185, type: 3}
+  - {fileID: 8380429958325602506, guid: 97626f53d0f71504f9cbbd8fca647185, type: 3}
+  - {fileID: 1786542765350160882, guid: ac36f045522ee024f83f5921ec09b621, type: 3}
   _chooseEnemyMovement: 0
   _waveID: 0
   _waveSize: 0
