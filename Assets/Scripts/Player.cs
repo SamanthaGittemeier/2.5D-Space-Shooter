@@ -158,6 +158,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void FoundHomingLaser()
+    {
+
+    }
+
+    IEnumerator FindEnemy()
+    {
+
+    }
+
     public void FoundAtomBomb()
     {
         StartCoroutine(FreezePlayer());
@@ -298,7 +308,6 @@ public class Player : MonoBehaviour
         if (_lives <= 0)
         {
             _spawnManager.OnPlayerDeath();
-            //Destroy(GameObject.FindWithTag("Triple Shot Powerup"));
             _playerExplosionAudio.Play();
             _playerExplodeAnimation.SetTrigger("PlayerDead");
             _leftWingDamaged.SetActive(false);
