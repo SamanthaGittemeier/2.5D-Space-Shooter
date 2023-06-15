@@ -6,14 +6,19 @@ public class PowerUp : MonoBehaviour
 {
     [SerializeField]
     private float _powerupSpeed = 3f;
+    [SerializeField]
+    private float _toPlayerSpeed = 5f;
 
     [SerializeField]     //0 = Triple Shot 1 = Speed 2 = Shield
     private int _powerupID;
 
+    [SerializeField]
+    private GameObject _player;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -21,6 +26,7 @@ public class PowerUp : MonoBehaviour
     {
         ScreenBounds();
         MoveDown();
+        MoveToPlayer();
     }
 
     public void ScreenBounds()
@@ -35,6 +41,14 @@ public class PowerUp : MonoBehaviour
     public void MoveDown()
     {
         transform.Translate(Vector3.down * _powerupSpeed * Time.deltaTime);
+    }
+
+    void MoveToPlayer()
+    {
+        if (Input.GetKey(KeyCode.C))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _toPlayerSpeed * Time.deltaTime);
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

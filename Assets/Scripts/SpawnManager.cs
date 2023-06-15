@@ -23,6 +23,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private int _chooseEnemyMovement;
     [SerializeField]
+    private int _chooseEnemyShield;
+    [SerializeField]
     private int _waveID;
     [SerializeField]
     private int _waveSize;
@@ -81,6 +83,8 @@ public class SpawnManager : MonoBehaviour
                 {
                     _chooseEnemyMovement = Random.Range(0, 3);
                     Debug.Log(_chooseEnemyMovement);
+                    //_chooseEnemyShield = Random.Range(0, 2);
+                    //Debug.Log(_chooseEnemyShield);
                     GameObject newEnemy = null;
                     switch (_chooseEnemyMovement)
                     {
@@ -95,7 +99,9 @@ public class SpawnManager : MonoBehaviour
                             break;
                     }
                     newEnemy.GetComponent<Enemy>().EnemyID(_chooseEnemyMovement);
-                    newEnemy.transform.parent = _enemyContainer.transform;
+                    //newEnemy.GetComponent<Enemy>().EnemyShieldChoice(_chooseEnemyShield);
+                    //newEnemy.transform.parent = _enemyContainer.transform;
+                    newEnemy.transform.SetParent(_enemyContainer.transform);
                     _spawned++;
                     yield return new WaitForSeconds(1);
                 }
@@ -135,7 +141,7 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         while (_stopSpawningPowerups == false)
         {
-            _rarePowerupSpawnTime = Random.Range(180f, 300f);
+            _rarePowerupSpawnTime = Random.Range(120, 180f);
             yield return new WaitForSeconds(_rarePowerupSpawnTime);
             int randomRarePowerups = Random.Range(0, _rarePowerups.Length);
             GameObject NewRarePowerup = Instantiate(_rarePowerups[randomRarePowerups], new Vector3(0, 0, 0), Quaternion.identity);

@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(0, -4, 0);
-        _spawnManager = GameObject.FindGameObjectWithTag("Spawn Manager").GetComponent<SpawnManager>();
+        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         _playerThruster = GameObject.Find("Thruster");
@@ -298,12 +298,13 @@ public class Player : MonoBehaviour
         if (_lives <= 0)
         {
             _spawnManager.OnPlayerDeath();
-            Destroy(GameObject.FindWithTag("Triple Shot Powerup"));
+            //Destroy(GameObject.FindWithTag("Triple Shot Powerup"));
             _playerExplosionAudio.Play();
             _playerExplodeAnimation.SetTrigger("PlayerDead");
             _leftWingDamaged.SetActive(false);
             _rightWingDamaged.SetActive(false);
             _playerThruster.SetActive(false);
+            _frozen.SetActive(false);
             Destroy(this.gameObject, 1.25f);
             _gameManager.GameOver();
             _speed = 0;

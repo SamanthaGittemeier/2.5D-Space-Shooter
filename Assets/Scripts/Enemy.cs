@@ -14,9 +14,13 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private int _enemyID;
+    [SerializeField]
+    private int _enemyShieldDecision;
 
     [SerializeField]
     private bool _allowedToFire;
+    [SerializeField]
+    private bool _enemyHasShield;
 
     [SerializeField]
     private Player _player;
@@ -35,6 +39,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private GameObject _enemyLaserPrefab;
+    [SerializeField]
+    private GameObject _enemyShield;
 
     void Start()
     {
@@ -47,6 +53,22 @@ public class Enemy : MonoBehaviour
         _enemySpeed = 2f;
         _randomX = Random.Range(-9.44f, 9.48f);
         _randomY = Random.Range(4.7f, 0f);
+        _enemyShield = GameObject.Find("Enemy Shield");
+        //temp
+        _enemyShield.SetActive(false);
+        
+        //_enemyShield.SetActive(false);
+        //_enemyShieldDecision = Random.Range(0, 2);
+        //if (_enemyShieldDecision == 0)
+        //{
+        //    _enemyHasShield = false;
+        //    _enemyShield.SetActive(false);
+        //}
+        //else if (_enemyShieldDecision == 1)
+        //{
+        //    _enemyHasShield = true;
+        //    _enemyShield.SetActive(true);
+        //}
     }
 
     void Update()
@@ -64,6 +86,17 @@ public class Enemy : MonoBehaviour
                 MoveLeft();
                 break;
         }
+
+        //if (_enemyShieldDecision == 0)
+        //{
+        //    _enemyHasShield = false;
+        //    _enemyShield.SetActive(false);
+        //}
+        //else if (_enemyShieldDecision == 1)
+        //{
+        //    _enemyHasShield = true;
+        //    _enemyShield.SetActive(true);
+        //}
     }
 
     public void FireBack()
@@ -113,6 +146,21 @@ public class Enemy : MonoBehaviour
         _enemyID = ID;
     }
 
+    //public void EnemyShieldChoice(int Choose)
+    //{
+    //    _enemyShieldDecision = Choose;
+    //    //if (_enemyShieldDecision == 0)
+    //    //{
+    //    //    _enemyShield.SetActive(false);
+    //    //    _enemyHasShield = false;
+    //    //}
+    //    //else if (_enemyShieldDecision == 1)
+    //    //{
+    //    //    _enemyShield.SetActive(true);
+    //    //    _enemyHasShield = true;
+    //    //}
+    //}
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -155,9 +203,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //void EnemyShieldHit()
+    //{
+    //    _enemyShield.SetActive(false);
+    //    _enemyHasShield = false;
+    //}
+
     public void FreezeEnemy()
     {
         _enemySpeed = 0f;
         _allowedToFire = false;
     }
+
+    //public void ShootPowerup()
+    //{
+    //    GameObject _enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+    //    _enemyLaser.GetComponentInChildren<Laser>().AssignToEnemy();
+    //}
 }

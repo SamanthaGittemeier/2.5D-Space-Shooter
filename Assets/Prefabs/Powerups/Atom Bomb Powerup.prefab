@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 8644433531738500765}
   m_Layer: 0
   m_Name: Atom Bomb Powerup
-  m_TagString: Untagged
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,11 +208,10 @@ MonoBehaviour:
   _pickupAnimator: {fileID: 0}
   _parentCollider: {fileID: 0}
   _parentRigidbody: {fileID: 0}
-  _randomSpawnTime: 0
-  _atomBombPlayer: {fileID: 0}
-  _atomBombEnemyPrefab: {fileID: 893772834724025576, guid: a6f09e5e04d790a4690a24e1ea151214,
-    type: 3}
-  _atomBombSpawnManager: {fileID: 0}
+  _player: {fileID: 0}
+  _currentEnemies: []
+  _currentPowerups: []
+  _spawnManager: {fileID: 0}
 --- !u!1 &8644433531830145199
 GameObject:
   m_ObjectHideFlags: 0

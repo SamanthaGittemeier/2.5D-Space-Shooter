@@ -7,16 +7,13 @@ TagManager:
   - Enemy
   - Laser
   - Spawn Manager
-  - Triple Shot Powerup
-  - Triple Shot
-  - Speed Powerup
-  - Shield Powerup
   - UI Manager
   - Game Manager
   - Play Button
   - Enemy Laser
   - Shockwave
   - Atom Bomb Container
+  - Powerup
   layers:
   - Default
   - TransparentFX

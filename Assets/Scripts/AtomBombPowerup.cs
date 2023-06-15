@@ -41,7 +41,7 @@ public class AtomBombPowerup : MonoBehaviour
         _pickupAnimator = _pickup.GetComponent<Animator>();
         _parentCollider = gameObject.GetComponent<Collider2D>();
         _parentRigidbody = gameObject.GetComponent<Rigidbody2D>();
-        _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        _player = GameObject.Find("Player").GetComponent<Player>();
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _powerupContainer = GameObject.Find("PowerupContainer");
         gameObject.transform.parent = _powerupContainer.transform;
