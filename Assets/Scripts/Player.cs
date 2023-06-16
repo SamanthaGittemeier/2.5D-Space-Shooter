@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 5f;
     private float _fireRate = 0.25f;
+    private float _homingFireRate = 1.5f;
     private float _canFire = -1f;
 
     [SerializeField]
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour
     private int _maxAmmo;
     [SerializeField]
     private int _ammoGap;
+    [SerializeField]
+    private int _homingShots;
 
     [SerializeField]
     private bool _haveTripleShot;
@@ -28,9 +31,13 @@ public class Player : MonoBehaviour
     private bool _haveShield;
     [SerializeField]
     private bool _stopShooting;
+    [SerializeField]
+    private bool _haveHomingLaser;
 
     [SerializeField]
     private GameObject _laserPrefab;
+    [SerializeField]
+    private GameObject _homingLaserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
@@ -45,6 +52,8 @@ public class Player : MonoBehaviour
     private GameObject _repair;
     [SerializeField]
     private GameObject _frozen;
+    [SerializeField]
+    private GameObject _enemyContainer;
 
     [SerializeField]
     private AudioSource _laserAudio;
@@ -96,6 +105,8 @@ public class Player : MonoBehaviour
         _maxAmmo = 60;
         _frozen = GameObject.Find("Frozen");
         _frozen.gameObject.SetActive(false);
+        _enemyContainer = GameObject.Find("EnemyContainer");
+        _homingShots = 0;
     }
 
     void Update()
@@ -140,7 +151,7 @@ public class Player : MonoBehaviour
 
     void ShootLaser()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == true && Time.time > _canFire && _ammoCount != 0 && _stopShooting == false)
+        if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == true && Time.time > _canFire && _ammoCount != 0 && _stopShooting == false && _haveHomingLaser == false)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
             _canFire = Time.time + _fireRate;
@@ -148,7 +159,7 @@ public class Player : MonoBehaviour
             _ammoCount--;
             _uiManager.UpdateAmmo(_ammoCount);
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == false && Time.time > _canFire && _ammoCount != 0 && _stopShooting == false)
+        if (Input.GetKeyDown(KeyCode.Space) && _haveTripleShot == false && Time.time > _canFire && _ammoCount != 0 && _stopShooting == false && _haveHomingLaser == false)
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             _canFire = Time.time + _fireRate;
@@ -156,20 +167,42 @@ public class Player : MonoBehaviour
             _ammoCount--;
             _uiManager.UpdateAmmo(_ammoCount);
         }
+        if (Input.GetKeyDown(KeyCode.Space) && _haveHomingLaser == true && _ammoCount != 0 && _stopShooting == false)
+        {
+            if (_enemyContainer.transform.childCount != 0 && _homingShots <3 && Time.time > _canFire)
+            {
+                GameObject _homingLaser = Instantiate(_homingLaserPrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
+                _homingLaser.GetComponent<Laser>().AssignAsHoming();
+                _canFire = Time.time + _homingFireRate;
+                _ammoCount--;
+                _homingShots++;
+                if (_homingShots == 3)
+                {
+                    _haveHomingLaser = false;
+                }
+            }
+            else if (_enemyContainer.transform.childCount == 0)
+            {
+                StartCoroutine(HomingLaserTimeout());
+            }
+        }
     }
 
     public void FoundHomingLaser()
     {
-
+        _haveHomingLaser = true;
+        _powerupAudio.Play();
     }
 
-    IEnumerator FindEnemy()
+    IEnumerator HomingLaserTimeout()
     {
-
+        yield return new WaitForSeconds(5f);
+        _haveHomingLaser = false;
     }
 
     public void FoundAtomBomb()
     {
+        _powerupAudio.Play();
         StartCoroutine(FreezePlayer());
     }
 
@@ -184,6 +217,7 @@ public class Player : MonoBehaviour
 
     public void FoundFreeze()
     {
+        _powerupAudio.Play();
         StartCoroutine(FrozenPlayer());
     }
 
@@ -258,6 +292,7 @@ public class Player : MonoBehaviour
 
     public void FoundHealth()
     {
+        _powerupAudio.Play();
         if (_lives < 3)
         {
             _lives++;

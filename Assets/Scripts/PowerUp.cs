@@ -25,8 +25,11 @@ public class PowerUp : MonoBehaviour
     void Update()
     {
         ScreenBounds();
-        MoveDown();
-        MoveToPlayer();
+        if (_powerupID != 6)
+        {
+            MoveDown();
+            MoveToPlayer();
+        }
     }
 
     public void ScreenBounds()
@@ -88,6 +91,11 @@ public class PowerUp : MonoBehaviour
                     case 5:
                         player.FoundFreeze();
                         Debug.Log("Player Is Frozen");
+                        Destroy(this.gameObject);
+                        break;
+                    case 6:
+                        player.FoundHomingLaser();
+                        Debug.Log("Homing Laser Activated");
                         Destroy(this.gameObject);
                         break;
                 }

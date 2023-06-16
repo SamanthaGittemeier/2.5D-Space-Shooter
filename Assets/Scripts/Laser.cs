@@ -6,12 +6,23 @@ public class Laser : MonoBehaviour
 {
     [SerializeField]
     private float _laserSpeed = 8f;
+    [SerializeField]
+    private float _closestDistance = Mathf.Infinity;
+    [SerializeField]
+    private float _distanceToTarget;
+    [SerializeField]
+    private float _angleToEnemy;
 
     [SerializeField]
     private bool _isEnemyLaser = false;
+    [SerializeField]
+    private bool _isHomingLaser = false;
 
     [SerializeField]
     private Player _player;
+
+    [SerializeField]
+    private Transform _targetEnemy;
 
     void Start()
     {
@@ -20,13 +31,18 @@ public class Laser : MonoBehaviour
 
     void Update()
     {
-        if (_isEnemyLaser == false)
-        {
-            MoveUp();
-        }
-        else if (_isEnemyLaser == true)
+        if (_isEnemyLaser == true)
         {
             MoveDown();
+        }
+        if (_isHomingLaser == true)
+        {
+            FindClosestEnemy();
+            MoveToClosestEnemy();
+        }
+        else if (_isEnemyLaser == false && _isHomingLaser == false)
+        {
+            MoveUp();
         }
     }
 
@@ -56,9 +72,35 @@ public class Laser : MonoBehaviour
         }
     }
 
+    public void FindClosestEnemy()
+    {
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            _distanceToTarget = Vector3.Distance(transform.position, enemy.transform.position);
+            if (_distanceToTarget < _closestDistance)
+            {
+                _closestDistance = _distanceToTarget;
+                _targetEnemy = enemy.transform;
+            }
+        }
+    }
+
+    public void MoveToClosestEnemy()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, _targetEnemy.transform.position, _laserSpeed * Time.deltaTime);
+        Vector3 targetDirection = _targetEnemy.position - transform.position;
+        _angleToEnemy = Vector3.Angle(targetDirection, transform.up);
+        transform.Rotate(0, 0, _angleToEnemy);
+    }
+
     public void AssignToEnemy()
     {
         _isEnemyLaser = true;
+    }
+
+    public void AssignAsHoming()
+    {
+        _isHomingLaser = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

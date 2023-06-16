@@ -41,6 +41,10 @@ public class Enemy : MonoBehaviour
     private GameObject _enemyLaserPrefab;
     [SerializeField]
     private GameObject _enemyShield;
+    [SerializeField]
+    private GameObject _enemyExplosionPrefab;
+    [SerializeField]
+    private GameObject _explosionsContainer;
 
     void Start()
     {
@@ -54,6 +58,7 @@ public class Enemy : MonoBehaviour
         _randomX = Random.Range(-9.44f, 9.48f);
         _randomY = Random.Range(4.7f, 0f);
         _enemyShield = GameObject.Find("Enemy Shield");
+        _explosionsContainer = GameObject.Find("ExplosionsContainer");
         //temp
         _enemyShield.SetActive(false);
         
@@ -171,12 +176,11 @@ public class Enemy : MonoBehaviour
                 player.Damage();
                 _enemySpeed = 0;
                 _player.KilledEnemy(10);
-                _enemyAnimator.SetTrigger("OnEnemyDeath");
-                _enemyAudio.Play();
+                GameObject explosion = Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
+                explosion.transform.parent = _explosionsContainer.transform;
+                Destroy(explosion, 2.5f);
                 _allowedToFire = false;
-                Destroy(_enemyCollider);
-                Destroy(_enemyRB);
-                Destroy(this.gameObject, 1.25f);
+                Destroy(this.gameObject);
             }
         }
         if (collision.tag == "Laser")
@@ -184,22 +188,20 @@ public class Enemy : MonoBehaviour
             Destroy(collision.gameObject);
             _player.KilledEnemy(10);
             _enemySpeed = 0;
-            _enemyAnimator.SetTrigger("OnEnemyDeath");
-            _enemyAudio.Play();
+            GameObject explosion = Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
+            explosion.transform.parent = _explosionsContainer.transform;
+            Destroy(explosion, 2.5f);
             _allowedToFire = false;
-            Destroy(_enemyCollider);
-            Destroy(_enemyRB);
-            Destroy(this.gameObject, 1.25f);
+            Destroy(this.gameObject);
         }
         if (collision.tag == "Shockwave")
         {
             _player.KilledEnemy(10);
-            _enemyAnimator.SetTrigger("OnEnemyDeath");
-            _enemyAudio.Play();
+            GameObject explosion = Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
+            explosion.transform.parent = _explosionsContainer.transform;
+            Destroy(explosion, 2.5f);
             _allowedToFire = false;
-            Destroy(_enemyCollider);
-            Destroy(_enemyRB);
-            Destroy(this.gameObject, 1.25f);
+            Destroy(this.gameObject);
         }
     }
 
