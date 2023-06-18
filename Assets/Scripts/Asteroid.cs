@@ -25,7 +25,6 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private Rigidbody2D _asteroidRB;
 
-    // Start is called before the first frame update
     void Start()
     {
         _asteroidAnimator = gameObject.GetComponent<Animator>();
@@ -35,7 +34,6 @@ public class Asteroid : MonoBehaviour
         _asteroidRB = gameObject.GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.Rotate(new Vector3 (0, 0, 360) * _asteroidSpeed * Time.deltaTime);

@@ -223,9 +223,9 @@ GameObject:
   - component: {fileID: 8644433531830145192}
   - component: {fileID: 8644433531830145194}
   - component: {fileID: 8644433531830145193}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pickup
-  m_TagString: Untagged
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

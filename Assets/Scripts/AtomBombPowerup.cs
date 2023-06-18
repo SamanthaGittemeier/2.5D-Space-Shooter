@@ -32,7 +32,6 @@ public class AtomBombPowerup : MonoBehaviour
     [SerializeField]
     private SpawnManager _spawnManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         _shockwave = GameObject.Find("Shockwave");
@@ -47,7 +46,6 @@ public class AtomBombPowerup : MonoBehaviour
         gameObject.transform.parent = _powerupContainer.transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
         

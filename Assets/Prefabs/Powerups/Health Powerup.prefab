@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3506740977919257347}
   - component: {fileID: 3601394116186399335}
   - component: {fileID: 1566645882644437924}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Health Powerup
   m_TagString: Powerup
   m_Icon: {fileID: 0}
@@ -154,4 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerupSpeed: 3
+  _toPlayerSpeed: 5
   _powerupID: 4
+  _player: {fileID: 0}

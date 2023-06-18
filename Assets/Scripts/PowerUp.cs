@@ -9,19 +9,17 @@ public class PowerUp : MonoBehaviour
     [SerializeField]
     private float _toPlayerSpeed = 5f;
 
-    [SerializeField]     //0 = Triple Shot 1 = Speed 2 = Shield
+    [SerializeField]
     private int _powerupID;
 
     [SerializeField]
     private GameObject _player;
 
-    // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.Find("Player");
     }
 
-    // Update is called once per frame
     void Update()
     {
         ScreenBounds();
@@ -100,6 +98,10 @@ public class PowerUp : MonoBehaviour
                         break;
                 }
             }
+        }
+        if (collision.tag == "Enemy Laser")
+        {
+            Destroy(this.gameObject);
         }
     }
 

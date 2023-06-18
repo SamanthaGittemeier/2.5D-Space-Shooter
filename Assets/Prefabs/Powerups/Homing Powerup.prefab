@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9080846144709033194}
   - component: {fileID: 5873378440330602920}
   - component: {fileID: 8947200227736442992}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Homing Powerup
   m_TagString: Powerup
   m_Icon: {fileID: 0}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8910741085410138148}
   - component: {fileID: 4845445405327607739}
   - component: {fileID: 1524880703347886789}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triple Shot Powerup
   m_TagString: Powerup
   m_Icon: {fileID: 0}
@@ -135,7 +135,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerupSpeed: 3
+  _toPlayerSpeed: 5
   _powerupID: 0
+  _player: {fileID: 0}
 --- !u!95 &1524880703347886789
 Animator:
   serializedVersion: 3

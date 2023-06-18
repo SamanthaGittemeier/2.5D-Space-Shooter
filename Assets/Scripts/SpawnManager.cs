@@ -83,8 +83,8 @@ public class SpawnManager : MonoBehaviour
                 {
                     _chooseEnemyMovement = Random.Range(0, 3);
                     Debug.Log(_chooseEnemyMovement);
-                    //_chooseEnemyShield = Random.Range(0, 2);
-                    //Debug.Log(_chooseEnemyShield);
+                    _chooseEnemyShield = Random.Range(0, 2);
+                    Debug.Log(_chooseEnemyShield);
                     GameObject newEnemy = null;
                     switch (_chooseEnemyMovement)
                     {
@@ -99,8 +99,7 @@ public class SpawnManager : MonoBehaviour
                             break;
                     }
                     newEnemy.GetComponent<Enemy>().EnemyID(_chooseEnemyMovement);
-                    //newEnemy.GetComponent<Enemy>().EnemyShieldChoice(_chooseEnemyShield);
-                    //newEnemy.transform.parent = _enemyContainer.transform;
+                    newEnemy.GetComponent<Enemy>().EnemyShieldChoice(_chooseEnemyShield);
                     newEnemy.transform.SetParent(_enemyContainer.transform);
                     _spawned++;
                     yield return new WaitForSeconds(1);

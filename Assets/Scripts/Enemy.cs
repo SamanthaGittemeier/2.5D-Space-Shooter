@@ -23,21 +23,6 @@ public class Enemy : MonoBehaviour
     private bool _enemyHasShield;
 
     [SerializeField]
-    private Player _player;
-
-    [SerializeField]
-    private Animator _enemyAnimator;
-
-    [SerializeField]
-    private AudioSource _enemyAudio;
-
-    [SerializeField]
-    private Collider2D _enemyCollider;
-
-    [SerializeField]
-    private Rigidbody2D _enemyRB;
-
-    [SerializeField]
     private GameObject _enemyLaserPrefab;
     [SerializeField]
     private GameObject _enemyShield;
@@ -46,34 +31,23 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _explosionsContainer;
 
+    [SerializeField]
+    private Player _player;
+
+    [SerializeField]
+    private Ray _lineOfSight;
+
+    [SerializeField]
+    private RaycastHit _losHit;
+
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-        _enemyAnimator = gameObject.GetComponent<Animator>();
-        _enemyAudio = gameObject.GetComponent<AudioSource>();
-        _enemyCollider = gameObject.GetComponent<Collider2D>();
-        _enemyRB = gameObject.GetComponent<Rigidbody2D>();
         _allowedToFire = true;
         _enemySpeed = 2f;
         _randomX = Random.Range(-9.44f, 9.48f);
         _randomY = Random.Range(4.7f, 0f);
-        _enemyShield = GameObject.Find("Enemy Shield");
         _explosionsContainer = GameObject.Find("ExplosionsContainer");
-        //temp
-        _enemyShield.SetActive(false);
-        
-        //_enemyShield.SetActive(false);
-        //_enemyShieldDecision = Random.Range(0, 2);
-        //if (_enemyShieldDecision == 0)
-        //{
-        //    _enemyHasShield = false;
-        //    _enemyShield.SetActive(false);
-        //}
-        //else if (_enemyShieldDecision == 1)
-        //{
-        //    _enemyHasShield = true;
-        //    _enemyShield.SetActive(true);
-        //}
     }
 
     void Update()
@@ -91,17 +65,6 @@ public class Enemy : MonoBehaviour
                 MoveLeft();
                 break;
         }
-
-        //if (_enemyShieldDecision == 0)
-        //{
-        //    _enemyHasShield = false;
-        //    _enemyShield.SetActive(false);
-        //}
-        //else if (_enemyShieldDecision == 1)
-        //{
-        //    _enemyHasShield = true;
-        //    _enemyShield.SetActive(true);
-        //}
     }
 
     public void FireBack()
@@ -146,25 +109,38 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void DestroyPowerup()
+    {
+        if (_allowedToFire == true)
+        {
+            GameObject _enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+            Debug.Log("Found Powerup");
+            Laser[] _lasers = _enemyLaser.GetComponentsInChildren<Laser>();
+            for (int i = 0; i < _lasers.Length; i++)
+            {
+                _lasers[i].AssignToEnemy();
+            }
+        }
+    }
+
     public void EnemyID(int ID)
     {
         _enemyID = ID;
     }
-
-    //public void EnemyShieldChoice(int Choose)
-    //{
-    //    _enemyShieldDecision = Choose;
-    //    //if (_enemyShieldDecision == 0)
-    //    //{
-    //    //    _enemyShield.SetActive(false);
-    //    //    _enemyHasShield = false;
-    //    //}
-    //    //else if (_enemyShieldDecision == 1)
-    //    //{
-    //    //    _enemyShield.SetActive(true);
-    //    //    _enemyHasShield = true;
-    //    //}
-    //}
+    public void EnemyShieldChoice(int Choose)
+    {
+        _enemyShieldDecision = Choose;
+        if (_enemyShieldDecision == 0)
+        {
+            _enemyShield.SetActive(false);
+            _enemyHasShield = false;
+        }
+        else if (_enemyShieldDecision == 1)
+        {
+            _enemyShield.SetActive(true);
+            _enemyHasShield = true;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -174,52 +150,58 @@ public class Enemy : MonoBehaviour
             if (player != null)
             {
                 player.Damage();
-                _enemySpeed = 0;
-                _player.KilledEnemy(10);
-                GameObject explosion = Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
-                explosion.transform.parent = _explosionsContainer.transform;
-                Destroy(explosion, 2.5f);
-                _allowedToFire = false;
-                Destroy(this.gameObject);
+                if (_enemyHasShield == false)
+                {
+                    DeathRoutine();
+                }
+                else 
+                {
+                    _enemyHasShield = false;
+                    _enemyShield.SetActive(false);
+                }
             }
         }
         if (collision.tag == "Laser")
         {
             Destroy(collision.gameObject);
-            _player.KilledEnemy(10);
-            _enemySpeed = 0;
-            GameObject explosion = Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
-            explosion.transform.parent = _explosionsContainer.transform;
-            Destroy(explosion, 2.5f);
-            _allowedToFire = false;
-            Destroy(this.gameObject);
+            if (_enemyHasShield == false)
+            {
+                DeathRoutine();
+            }
+            else
+            {
+                _enemyHasShield = false;
+                _enemyShield.SetActive(false);
+            }
         }
         if (collision.tag == "Shockwave")
         {
-            _player.KilledEnemy(10);
-            GameObject explosion = Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
-            explosion.transform.parent = _explosionsContainer.transform;
-            Destroy(explosion, 2.5f);
-            _allowedToFire = false;
-            Destroy(this.gameObject);
+            if (_enemyHasShield == false)
+            {
+                DeathRoutine();
+            }
+            else
+            {
+                _enemyHasShield = false;
+                _enemyShield.SetActive(false);
+            }
         }
     }
 
-    //void EnemyShieldHit()
-    //{
-    //    _enemyShield.SetActive(false);
-    //    _enemyHasShield = false;
-    //}
+    public void DeathRoutine()
+    {
+        _player.KilledEnemy(10);
+        _enemySpeed = 0;
+        GameObject explosion = Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
+        explosion.transform.parent = _explosionsContainer.transform;
+        Destroy(explosion, 2.5f);
+        _allowedToFire = false;
+        Destroy(this.gameObject);
+    }
 
     public void FreezeEnemy()
     {
         _enemySpeed = 0f;
         _allowedToFire = false;
     }
-
-    //public void ShootPowerup()
-    //{
-    //    GameObject _enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
-    //    _enemyLaser.GetComponentInChildren<Laser>().AssignToEnemy();
-    //}
 }

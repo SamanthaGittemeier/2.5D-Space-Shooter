@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2356393926595981216}
   - component: {fileID: 2356393926595981217}
   - component: {fileID: 2356393926595981222}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Freeze Powerup
   m_TagString: Powerup
   m_Icon: {fileID: 0}
@@ -117,7 +117,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerupSpeed: 3
+  _toPlayerSpeed: 5
   _powerupID: 5
+  _player: {fileID: 0}
 --- !u!58 &2356393926595981217
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1977596298226549656}
   - component: {fileID: 1889494146741389339}
   - component: {fileID: 171603668854746641}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ammo Powerup
   m_TagString: Powerup
   m_Icon: {fileID: 0}
@@ -117,7 +117,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerupSpeed: 3
+  _toPlayerSpeed: 5
   _powerupID: 3
+  _player: {fileID: 0}
 --- !u!58 &1889494146741389339
 CircleCollider2D:
   m_ObjectHideFlags: 0

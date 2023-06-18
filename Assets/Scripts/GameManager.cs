@@ -26,14 +26,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float _currentClipTime;
 
-    // Start is called before the first frame update
     void Start()
     {
         _playerGM = GameObject.Find("Player").GetComponent<Player>();
         _fuelBarAnim = GameObject.Find("Fuel Bar").GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver == true)
