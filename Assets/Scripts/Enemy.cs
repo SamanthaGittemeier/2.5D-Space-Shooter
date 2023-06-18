@@ -34,12 +34,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Player _player;
 
-    [SerializeField]
-    private Ray _lineOfSight;
-
-    [SerializeField]
-    private RaycastHit _losHit;
-
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -127,6 +121,7 @@ public class Enemy : MonoBehaviour
     {
         _enemyID = ID;
     }
+
     public void EnemyShieldChoice(int Choose)
     {
         _enemyShieldDecision = Choose;
