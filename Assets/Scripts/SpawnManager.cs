@@ -25,6 +25,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private int _chooseEnemyShield;
     [SerializeField]
+    private int _chooseEnemyTypeID;
+    [SerializeField]
     private int _waveID;
     [SerializeField]
     private int _waveSize;
@@ -65,41 +67,85 @@ public class SpawnManager : MonoBehaviour
                 {
                     case 0:
                         _waveSize = 3;
+                        //6 types total
+                        //0 - normal enemy
+                        //1 - random enemy
+                        //2 - aggressive enemy
+                        //3 - smart enemy
+                        //4 - avoider enemy
+                        //5 - boss
+                        _chooseEnemyTypeID = 0;
                         break;
                     case 1:
                         _waveSize = 5;
+                        _chooseEnemyTypeID = Random.Range(0, 2);
                         break;
                     case 2:
                         _waveSize = 7;
+                        _chooseEnemyTypeID = Random.Range(0, 2);
                         break;
                     case 3:
                         _waveSize = 10;
+                        _chooseEnemyTypeID = Random.Range(0, 2);
                         break;
                     case 4:
                         _waveSize = 15;
+                        _chooseEnemyTypeID = Random.Range(0, 2);
                         break;
+                    //add case for boss here
+                    //enemy id only equals boss id
+                    //wave size is 1 for boss
                 }
                 for (int i = 0; i < _waveSize; i++)
                 {
-                    _chooseEnemyMovement = Random.Range(0, 3);
-                    Debug.Log(_chooseEnemyMovement);
                     _chooseEnemyShield = Random.Range(0, 2);
                     Debug.Log(_chooseEnemyShield);
                     GameObject newEnemy = null;
-                    switch (_chooseEnemyMovement)
+                    if (_chooseEnemyTypeID != 1)
                     {
-                        case 0:
-                            newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(_enemyRandomX, 6.93f, 0), Quaternion.identity);
-                            break;
-                        case 1:
-                            newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(-9.44f, _enemyRandomY, 0), Quaternion.identity);
-                            break;
-                        case 2:
-                            newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(9.44f, _enemyRandomY, 0), Quaternion.identity);
-                            break;
+                        _chooseEnemyMovement = Random.Range(0, 4);
+                        Debug.Log(_chooseEnemyMovement);
+                        switch (_chooseEnemyMovement)
+                        {
+                            case 0:
+                                newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(_enemyRandomX, 6.93f, 0), Quaternion.identity);
+                                break;
+                            case 1:
+                                newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(-9.44f, _enemyRandomY, 0), Quaternion.identity);
+                                break;
+                            case 2:
+                                newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(9.44f, _enemyRandomY, 0), Quaternion.identity);
+                                break;
+                        }
                     }
-                    newEnemy.GetComponent<Enemy>().EnemyID(_chooseEnemyMovement);
+                    else if (_chooseEnemyTypeID == 1)
+                    {
+                        _chooseEnemyMovement = 3;
+                        Debug.Log(_chooseEnemyMovement);
+                        int _randomSpawn = Random.Range(0, 2);
+                        if (_randomSpawn == 0)
+                        {
+                            newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(_enemyRandomX, 6.93f, 0), Quaternion.identity);
+                            newEnemy.GetComponent<Enemy>().ChooseLengths();
+                        }
+                        else if (_randomSpawn == 1)
+                        {
+                            int _randomXChoice = Random.Range(0, 2);
+                            if (_randomXChoice == 0)
+                            {
+                                newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(-9.44f, _enemyRandomY, 0), Quaternion.identity);
+                                newEnemy.GetComponent<Enemy>().ChooseLengths();
+                            }
+                            else if (_randomXChoice == 1)
+                            {
+                                newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(9.44f, _enemyRandomY, 0), Quaternion.identity);
+                                newEnemy.GetComponent<Enemy>().ChooseLengths();
+                            }
+                        }
+                    }
+                    newEnemy.GetComponent<Enemy>().EnemyMovementID(_chooseEnemyMovement);
                     newEnemy.GetComponent<Enemy>().EnemyShieldChoice(_chooseEnemyShield);
+                    newEnemy.GetComponent<Enemy>().EnemyTypeID(_chooseEnemyTypeID);
                     newEnemy.transform.SetParent(_enemyContainer.transform);
                     _spawned++;
                     yield return new WaitForSeconds(1);
@@ -107,6 +153,7 @@ public class SpawnManager : MonoBehaviour
             }
             if (_enemyContainer.transform.childCount == 0)
             {
+                yield return new WaitForSeconds(2);
                 _waveID++;
                 _spawned = 0;
             }

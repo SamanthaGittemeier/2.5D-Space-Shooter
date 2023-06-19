@@ -11,11 +11,17 @@ public class Enemy : MonoBehaviour
     private float _randomX;
     [SerializeField]
     private float _randomY;
+    [SerializeField]
+    private float _randomTimeLength;
 
     [SerializeField]
-    private int _enemyID;
+    private int _enemyMovementID;
+    [SerializeField]
+    private int _enemyTypeID;
     [SerializeField]
     private int _enemyShieldDecision;
+    [SerializeField]
+    private int _randomMoveChoice;
 
     [SerializeField]
     private bool _allowedToFire;
@@ -47,7 +53,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         FireBack();
-        switch (_enemyID)
+        switch (_enemyMovementID)
         {
             case 0:
                 MoveDown();
@@ -57,6 +63,9 @@ public class Enemy : MonoBehaviour
                 break;
             case 2:
                 MoveLeft();
+                break;
+            case 3:
+                MoveRandom();
                 break;
         }
     }
@@ -103,6 +112,35 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void MoveRandom()
+    {
+        if (_randomMoveChoice == 0)
+        {
+            MoveDown();
+        }
+        if (_randomMoveChoice == 1)
+        {
+            MoveRight();
+        }
+        if (_randomMoveChoice == 2)
+        {
+            MoveLeft();
+        }
+    }
+
+    public void ChooseLengths()
+    {
+        StartCoroutine(ChooseRandomLengths());
+    }
+
+    public IEnumerator ChooseRandomLengths()
+    {
+        _randomTimeLength = Random.Range(1, 4);
+        _randomMoveChoice = Random.Range(0, 3);
+        yield return new WaitForSeconds(_randomTimeLength);
+        StartCoroutine(ChooseRandomLengths());
+    }
+
     public void DestroyPowerup()
     {
         if (_allowedToFire == true)
@@ -117,9 +155,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void EnemyID(int ID)
+    public void EnemyMovementID(int ID)
     {
-        _enemyID = ID;
+        _enemyMovementID = ID;
+    }
+
+    public void EnemyTypeID(int typeID)
+    {
+        _enemyTypeID = typeID;
     }
 
     public void EnemyShieldChoice(int Choose)
