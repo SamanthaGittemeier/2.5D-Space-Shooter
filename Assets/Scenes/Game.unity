@@ -1730,6 +1730,7 @@ MonoBehaviour:
   - {fileID: 1786542765350160882, guid: ac36f045522ee024f83f5921ec09b621, type: 3}
   _chooseEnemyMovement: 0
   _chooseEnemyShield: 0
+  _chooseEnemyTypeID: 0
   _waveID: 0
   _waveSize: 0
   _spawned: 0

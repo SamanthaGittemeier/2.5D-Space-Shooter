@@ -207,6 +207,7 @@ GameObject:
   - component: {fileID: 3279845214827254908}
   - component: {fileID: 6511275420914246353}
   - component: {fileID: 7469609032657910411}
+  - component: {fileID: 6020129619522288962}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -249,13 +250,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _randomX: 0
   _randomY: 0
-  _enemyID: 0
+  _randomTimeLength: 0
+  _enemyMovementID: 0
+  _enemyTypeID: 0
   _enemyShieldDecision: 0
-  _playerLayer: 9
-  _powerupLayer: 10
-  _combineLayers: 0
+  _randomMoveChoice: 0
   _allowedToFire: 0
   _enemyHasShield: 0
+  _isRandomEnemy: 0
+  _isAggressiveEnemy: 0
+  _isSmartEnemy: 0
+  _isAvoiderEnemy: 0
+  _isBoss: 0
   _enemyLaserPrefab: {fileID: 113815090639864302, guid: 3ce4dd318babba44ab9a420cbbbe3735,
     type: 3}
   _enemyShield: {fileID: 4621641515162409172}
@@ -263,6 +269,7 @@ MonoBehaviour:
     type: 3}
   _explosionsContainer: {fileID: 0}
   _player: {fileID: 0}
+  _colorAnimator: {fileID: 6020129619522288962}
 --- !u!212 &3279845214827254908
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -360,3 +367,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.2514563, y: 2.8431673}
   m_EdgeRadius: 0
+--- !u!95 &6020129619522288962
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7753358588269737716}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ab2d08d148d85bb4d8d92398456b386a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

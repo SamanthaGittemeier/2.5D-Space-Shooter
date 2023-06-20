@@ -17,12 +17,17 @@ public class Laser : MonoBehaviour
     private bool _isEnemyLaser = false;
     [SerializeField]
     private bool _isHomingLaser = false;
+    [SerializeField]
+    private bool _isLaserBeams = false;
 
     [SerializeField]
     private Player _player;
 
     [SerializeField]
     private Transform _targetEnemy;
+
+    [SerializeField]
+    private Animator _laserBeamsAnimator;
 
     void Start()
     {
@@ -35,6 +40,10 @@ public class Laser : MonoBehaviour
         {
             MoveDown();
         }
+        if (_isLaserBeams == true)
+        {
+            LaserBeamsMovement();
+        }
         if (_isHomingLaser == true)
         {
             FindClosestEnemy();
@@ -43,19 +52,6 @@ public class Laser : MonoBehaviour
         else if (_isEnemyLaser == false && _isHomingLaser == false)
         {
             MoveUp();
-        }
-    }
-
-    public void MoveUp()
-    {
-        transform.Translate(Vector3.up * _laserSpeed * Time.deltaTime);
-        if (transform.position.y >= 8f)
-        {
-            if (transform.parent != null)
-            {
-                Destroy(transform.parent.gameObject);
-            }
-            Destroy(this.gameObject);
         }
     }
 
@@ -70,6 +66,14 @@ public class Laser : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+    }
+
+    public void LaserBeamsMovement()
+    {
+        _laserBeamsAnimator = gameObject.GetComponent<Animator>();
+        _laserBeamsAnimator.SetBool("IsLaserBeam", true);
+        _laserSpeed = 3f;
+        MoveDown();
     }
 
     public void FindClosestEnemy()
@@ -93,6 +97,19 @@ public class Laser : MonoBehaviour
         transform.Rotate(0, 0, _angleToEnemy);
     }
 
+    public void MoveUp()
+    {
+        transform.Translate(Vector3.up * _laserSpeed * Time.deltaTime);
+        if (transform.position.y >= 8f)
+        {
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+            Destroy(this.gameObject);
+        }
+    }
+
     public void AssignToEnemy()
     {
         _isEnemyLaser = true;
@@ -101,6 +118,11 @@ public class Laser : MonoBehaviour
     public void AssignAsHoming()
     {
         _isHomingLaser = true;
+    }
+
+    public void AssignAsLaserBeams()
+    {
+        _isLaserBeams = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

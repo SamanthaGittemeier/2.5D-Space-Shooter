@@ -99,12 +99,12 @@ public class SpawnManager : MonoBehaviour
                 for (int i = 0; i < _waveSize; i++)
                 {
                     _chooseEnemyShield = Random.Range(0, 2);
-                    Debug.Log(_chooseEnemyShield);
+                    Debug.Log("Enemy Shield is " + _chooseEnemyShield);
                     GameObject newEnemy = null;
                     if (_chooseEnemyTypeID != 1)
                     {
-                        _chooseEnemyMovement = Random.Range(0, 4);
-                        Debug.Log(_chooseEnemyMovement);
+                        _chooseEnemyMovement = Random.Range(0, 3);
+                        Debug.Log("Enemy Movement Selection is " + _chooseEnemyMovement);
                         switch (_chooseEnemyMovement)
                         {
                             case 0:
@@ -121,12 +121,11 @@ public class SpawnManager : MonoBehaviour
                     else if (_chooseEnemyTypeID == 1)
                     {
                         _chooseEnemyMovement = 3;
-                        Debug.Log(_chooseEnemyMovement);
+                        Debug.Log("Random Enemy " + _chooseEnemyMovement);
                         int _randomSpawn = Random.Range(0, 2);
                         if (_randomSpawn == 0)
                         {
                             newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(_enemyRandomX, 6.93f, 0), Quaternion.identity);
-                            newEnemy.GetComponent<Enemy>().ChooseLengths();
                         }
                         else if (_randomSpawn == 1)
                         {
@@ -134,14 +133,13 @@ public class SpawnManager : MonoBehaviour
                             if (_randomXChoice == 0)
                             {
                                 newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(-9.44f, _enemyRandomY, 0), Quaternion.identity);
-                                newEnemy.GetComponent<Enemy>().ChooseLengths();
                             }
                             else if (_randomXChoice == 1)
                             {
                                 newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(9.44f, _enemyRandomY, 0), Quaternion.identity);
-                                newEnemy.GetComponent<Enemy>().ChooseLengths();
                             }
                         }
+                        newEnemy.GetComponent<Enemy>().ChooseLengths();
                     }
                     newEnemy.GetComponent<Enemy>().EnemyMovementID(_chooseEnemyMovement);
                     newEnemy.GetComponent<Enemy>().EnemyShieldChoice(_chooseEnemyShield);

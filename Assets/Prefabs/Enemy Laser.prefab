@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7153649233662733452}
   - component: {fileID: 4085409791775872956}
   - component: {fileID: 7357156699775880185}
+  - component: {fileID: 7910550042159430891}
   m_Layer: 0
   m_Name: Enemy Laser
   m_TagString: Enemy Laser
@@ -48,8 +49,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _laserSpeed: 8
+  _closestDistance: Infinity
+  _distanceToTarget: 0
+  _angleToEnemy: 0
   _isEnemyLaser: 0
+  _isHomingLaser: 0
   _player: {fileID: 0}
+  _targetEnemy: {fileID: 0}
 --- !u!61 &4085409791775872956
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -97,6 +103,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &7910550042159430891
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113815090639864302}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 66395c352f7c9e9439de2188ca232351, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4243889353492958033
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,6 +27,16 @@ public class Enemy : MonoBehaviour
     private bool _allowedToFire;
     [SerializeField]
     private bool _enemyHasShield;
+    [SerializeField]
+    private bool _isRandomEnemy = false;
+    [SerializeField]
+    private bool _isAggressiveEnemy = false;
+    [SerializeField]
+    private bool _isSmartEnemy = false;
+    [SerializeField]
+    private bool _isAvoiderEnemy = false;
+    [SerializeField]
+    private bool _isBoss = false;
 
     [SerializeField]
     private GameObject _enemyLaserPrefab;
@@ -40,6 +50,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Player _player;
 
+    [SerializeField]
+    private Animator _colorAnimator;
+
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -52,7 +65,6 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        FireBack();
         switch (_enemyMovementID)
         {
             case 0:
@@ -68,20 +80,37 @@ public class Enemy : MonoBehaviour
                 MoveRandom();
                 break;
         }
-    }
-
-    public void FireBack()
-    {
-        if (Time.time > _enemyCanFire && _allowedToFire == true)
+        switch (_enemyTypeID)
         {
-            _enemyFireRate = Random.Range(3f, 7f);
-            _enemyCanFire = Time.time + _enemyFireRate;
-            GameObject _enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
-            Laser[] _lasers = _enemyLaser.GetComponentsInChildren<Laser>();
-            for (int i = 0; i < _lasers.Length; i++)
-            {
-                _lasers[i].AssignToEnemy();
-            }
+            case 0:
+                _colorAnimator.SetInteger("TypeID", 0);
+                FireBack();
+                break;
+            case 1:
+                _isRandomEnemy = true;
+                //call random enemy shooting function
+                _colorAnimator.SetInteger("TypeID", 1);
+                FireBeams();
+                break;
+            case 2:
+                _isAggressiveEnemy = true;
+                //call aggressive enemy behavior
+                _colorAnimator.SetInteger("TypeID", 2);
+                break;
+            case 3:
+                _isSmartEnemy = true;
+                //call smart enemy behavior
+                _colorAnimator.SetInteger("TypeID", 3);
+                break;
+            case 4:
+                _isAvoiderEnemy = true;
+                //call avoider enemy behavior
+                _colorAnimator.SetInteger("TypeID", 4);
+                break;
+            case 5:
+                _isBoss = true;
+                //call boss behavior
+                break;
         }
     }
 
@@ -126,6 +155,45 @@ public class Enemy : MonoBehaviour
         {
             MoveLeft();
         }
+    }
+
+    public void FireBack()
+    {
+        if (Time.time > _enemyCanFire && _allowedToFire == true && _isRandomEnemy == false)
+        {
+            _enemyFireRate = Random.Range(3f, 7f);
+            _enemyCanFire = Time.time + _enemyFireRate;
+            GameObject _enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+            Laser[] _lasers = _enemyLaser.GetComponentsInChildren<Laser>();
+            for (int i = 0; i < _lasers.Length; i++)
+            {
+                _lasers[i].AssignToEnemy();
+            }
+        }
+    }
+
+    public void FireBeams()
+    {
+        if (Time.time > _enemyCanFire && _allowedToFire == true && _isRandomEnemy == true)
+        {
+            _enemyFireRate = Random.Range(4f, 9f);
+            _enemyCanFire = Time.time + _enemyFireRate;
+            StartCoroutine(FiringBeams());
+            GameObject _enemyLaserBeams = Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            Laser[] _laserBeams = _enemyLaserBeams.GetComponentsInChildren<Laser>();
+            for (int i = 0; i < _laserBeams.Length; i++)
+            {
+                _laserBeams[i].AssignToEnemy();
+                _laserBeams[i].AssignAsLaserBeams();
+            }
+        }
+    }
+
+    IEnumerator FiringBeams()
+    {
+        _enemySpeed = 0;
+        yield return new WaitForSeconds(1f);
+        _enemySpeed = 2f;
     }
 
     public void ChooseLengths()
