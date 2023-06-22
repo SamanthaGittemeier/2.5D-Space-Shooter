@@ -127,7 +127,7 @@ public class Laser : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(_isEnemyLaser == true && collision.tag == "Player")
+        if(this.gameObject.tag == "Enemy Laser" && collision.tag == "Player")
         {
             Debug.Log("Hit Player");
             _player.Damage();

@@ -18,5 +18,10 @@ public class LineOfSight : MonoBehaviour
         {
             _parentEnemy.StartRamming();
         }
+
+        if(this.gameObject.name == "Backwards Line Of Sight" && collision.tag == "Player")
+        {
+            _parentEnemy.FireBackshot();
+        }
     }
 }

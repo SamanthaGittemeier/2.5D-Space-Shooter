@@ -41,6 +41,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _enemyLaserPrefab;
     [SerializeField]
+    private GameObject _enemyBackshotPrefab;
+    [SerializeField]
     private GameObject _enemyShield;
     [SerializeField]
     private GameObject _enemyExplosionPrefab;
@@ -61,10 +63,38 @@ public class Enemy : MonoBehaviour
         _randomX = Random.Range(-9.44f, 9.48f);
         _randomY = Random.Range(4.7f, 0f);
         _explosionsContainer = GameObject.Find("ExplosionsContainer");
+        switch (_enemyTypeID)
+        {
+            case 0:
+                _colorAnimator.SetInteger("TypeID", 0);
+                break;
+            case 1:
+                _isRandomEnemy = true;
+                _colorAnimator.SetInteger("TypeID", 1);
+                FireBeams();
+                break;
+            case 2:
+                _isAggressiveEnemy = true;
+                _colorAnimator.SetInteger("TypeID", 2);
+                break;
+            case 3:
+                _isSmartEnemy = true;
+                _colorAnimator.SetInteger("TypeID", 3);
+                break;
+            case 4:
+                _isAvoiderEnemy = true;
+                _colorAnimator.SetInteger("TypeID", 4);
+                break;
+            case 5:
+                _isBoss = true;
+                //call boss behavior
+                break;
+        }
     }
 
     void Update()
     {
+        Fire();
         switch (_enemyMovementID)
         {
             case 0:
@@ -81,36 +111,6 @@ public class Enemy : MonoBehaviour
                 break;
             case 4:
                 MoveTowardsPlayer();
-                break;
-        }
-        switch (_enemyTypeID)
-        {
-            case 0:
-                _colorAnimator.SetInteger("TypeID", 0);
-                FireBack();
-                break;
-            case 1:
-                _isRandomEnemy = true;
-                _colorAnimator.SetInteger("TypeID", 1);
-                FireBeams();
-                break;
-            case 2:
-                _isAggressiveEnemy = true;
-                _colorAnimator.SetInteger("TypeID", 2);
-                break;
-            case 3:
-                _isSmartEnemy = true;
-                //call smart enemy behavior
-                _colorAnimator.SetInteger("TypeID", 3);
-                break;
-            case 4:
-                _isAvoiderEnemy = true;
-                //call avoider enemy behavior
-                _colorAnimator.SetInteger("TypeID", 4);
-                break;
-            case 5:
-                _isBoss = true;
-                //call boss behavior
                 break;
         }
     }
@@ -163,7 +163,7 @@ public class Enemy : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _enemySpeed * Time.deltaTime);
     }
 
-    public void FireBack()
+    public void Fire()
     {
         if (Time.time > _enemyCanFire && _allowedToFire == true && _isRandomEnemy == false)
         {
@@ -192,6 +192,14 @@ public class Enemy : MonoBehaviour
                 _laserBeams[i].AssignToEnemy();
                 _laserBeams[i].AssignAsLaserBeams();
             }
+        }
+    }
+
+    public void FireBackshot()
+    {
+        if (_allowedToFire == true && _isSmartEnemy == true)
+        {
+            GameObject _enemyBackshot = Instantiate(_enemyBackshotPrefab, transform.position + new Vector3(2.3f, 2.9f, 0), Quaternion.identity);
         }
     }
 
@@ -228,7 +236,7 @@ public class Enemy : MonoBehaviour
         _enemySpeed = 5;
         _enemyMovementID = 4;
         yield return new WaitForSeconds(3f);
-        _enemySpeed = 5;
+        _enemySpeed = 2;
         _enemyMovementID = Random.Range(0, 3);
     }
 
