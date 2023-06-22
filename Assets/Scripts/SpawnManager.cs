@@ -27,6 +27,10 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private int _chooseEnemyTypeID;
     [SerializeField]
+    private int _enemyTypeMin = 0;
+    [SerializeField]
+    private int _enemyTypeMax;
+    [SerializeField]
     private int _waveID;
     [SerializeField]
     private int _waveSize;
@@ -74,23 +78,23 @@ public class SpawnManager : MonoBehaviour
                         //3 - smart enemy
                         //4 - avoider enemy
                         //5 - boss
-                        _chooseEnemyTypeID = 0;
+                        _enemyTypeMax = 1;
                         break;
                     case 1:
                         _waveSize = 5;
-                        _chooseEnemyTypeID = Random.Range(0, 2);
+                        _enemyTypeMax = 2;
                         break;
                     case 2:
                         _waveSize = 7;
-                        _chooseEnemyTypeID = Random.Range(0, 2);
+                        _enemyTypeMax = 3;
                         break;
                     case 3:
                         _waveSize = 10;
-                        _chooseEnemyTypeID = Random.Range(0, 2);
+                        _enemyTypeMax = 4;
                         break;
                     case 4:
                         _waveSize = 15;
-                        _chooseEnemyTypeID = Random.Range(0, 2);
+                        _enemyTypeMax = 5;
                         break;
                     //add case for boss here
                     //enemy id only equals boss id
@@ -100,6 +104,8 @@ public class SpawnManager : MonoBehaviour
                 {
                     _chooseEnemyShield = Random.Range(0, 2);
                     Debug.Log("Enemy Shield is " + _chooseEnemyShield);
+                    _chooseEnemyTypeID = Random.Range(_enemyTypeMin, _enemyTypeMax);
+                    Debug.Log("Enemy Type is " + _chooseEnemyTypeID);
                     GameObject newEnemy = null;
                     if (_chooseEnemyTypeID != 1)
                     {

@@ -13,5 +13,10 @@ public class LineOfSight : MonoBehaviour
         {
             _parentEnemy.DestroyPowerup();
         }
+
+        if (collision.tag == "Player")
+        {
+            _parentEnemy.StartRamming();
+        }
     }
 }

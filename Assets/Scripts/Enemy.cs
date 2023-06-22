@@ -79,6 +79,9 @@ public class Enemy : MonoBehaviour
             case 3:
                 MoveRandom();
                 break;
+            case 4:
+                MoveTowardsPlayer();
+                break;
         }
         switch (_enemyTypeID)
         {
@@ -88,13 +91,11 @@ public class Enemy : MonoBehaviour
                 break;
             case 1:
                 _isRandomEnemy = true;
-                //call random enemy shooting function
                 _colorAnimator.SetInteger("TypeID", 1);
                 FireBeams();
                 break;
             case 2:
                 _isAggressiveEnemy = true;
-                //call aggressive enemy behavior
                 _colorAnimator.SetInteger("TypeID", 2);
                 break;
             case 3:
@@ -157,6 +158,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void MoveTowardsPlayer()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _enemySpeed * Time.deltaTime);
+    }
+
     public void FireBack()
     {
         if (Time.time > _enemyCanFire && _allowedToFire == true && _isRandomEnemy == false)
@@ -207,6 +213,23 @@ public class Enemy : MonoBehaviour
         _randomMoveChoice = Random.Range(0, 3);
         yield return new WaitForSeconds(_randomTimeLength);
         StartCoroutine(ChooseRandomLengths());
+    }
+
+    public void StartRamming()
+    {
+        if (_isAggressiveEnemy == true)
+        {
+            StartCoroutine(RamPlayer());
+        }
+    }
+
+    IEnumerator RamPlayer()
+    {
+        _enemySpeed = 5;
+        _enemyMovementID = 4;
+        yield return new WaitForSeconds(3f);
+        _enemySpeed = 5;
+        _enemyMovementID = Random.Range(0, 3);
     }
 
     public void DestroyPowerup()
