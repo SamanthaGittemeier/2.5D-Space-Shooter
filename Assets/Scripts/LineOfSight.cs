@@ -23,5 +23,10 @@ public class LineOfSight : MonoBehaviour
         {
             _parentEnemy.FireBackshot();
         }
+
+        if (collision.tag == "Laser")
+        {
+            _parentEnemy.StartAvoidance();
+        }
     }
 }

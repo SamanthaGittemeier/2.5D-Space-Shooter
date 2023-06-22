@@ -163,6 +163,26 @@ public class Enemy : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _enemySpeed * Time.deltaTime);
     }
 
+    public void StartAvoidance()
+    {
+        if (_isAvoiderEnemy == true)
+        {
+            if (_enemyMovementID == 0)
+            {
+                _enemyMovementID = Random.Range(1, 3);
+            }
+            StartCoroutine(AvoidShot());
+        }
+    }
+
+    IEnumerator AvoidShot()
+    {
+        _enemySpeed = 3;
+        yield return new WaitForSeconds(1.5f);
+        _enemySpeed = 2;
+        _enemyMovementID = Random.Range(0, 3);
+    }
+
     public void Fire()
     {
         if (Time.time > _enemyCanFire && _allowedToFire == true && _isRandomEnemy == false)
