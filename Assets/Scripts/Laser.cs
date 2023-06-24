@@ -19,6 +19,10 @@ public class Laser : MonoBehaviour
     private bool _isHomingLaser = false;
     [SerializeField]
     private bool _isLaserBeams = false;
+    [SerializeField]
+    private bool _isBackshot = false;
+    [SerializeField]
+    private bool _isSingleLaser = false;
 
     [SerializeField]
     private Player _player;
@@ -27,11 +31,24 @@ public class Laser : MonoBehaviour
     private Transform _targetEnemy;
 
     [SerializeField]
-    private Animator _laserBeamsAnimator;
+    private Animator _laserAnimator;
 
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _laserAnimator = gameObject.GetComponent<Animator>();
+        if (_isBackshot == true)
+        {
+            _laserAnimator.SetBool("IsBackshot", _isBackshot);
+        }
+        else if (_isSingleLaser == true)
+        {
+            _laserAnimator.SetBool("IsBackshot", _isSingleLaser);
+        }
+        else if (_isLaserBeams == true)
+        {
+            _laserAnimator.SetBool("IsLaserBeam", _isLaserBeams);
+        }
     }
 
     void Update()
@@ -40,16 +57,16 @@ public class Laser : MonoBehaviour
         {
             MoveDown();
         }
-        if (_isLaserBeams == true)
-        {
-            LaserBeamsMovement();
-        }
-        if (_isHomingLaser == true)
+        else if (_isHomingLaser == true)
         {
             FindClosestEnemy();
             MoveToClosestEnemy();
         }
-        else if (_isEnemyLaser == false && _isHomingLaser == false)
+        else if (_isBackshot == true)
+        {
+            MoveUp();
+        }
+        else
         {
             MoveUp();
         }
@@ -66,14 +83,31 @@ public class Laser : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+        if (_isLaserBeams == true)
+        {
+            _laserSpeed = 3f;
+        }
+        if (_isSingleLaser == true)
+        {
+            SingleLaser();
+        }
     }
 
-    public void LaserBeamsMovement()
+    //public void LaserBeamsMovement()
+    //{
+    //    _laserAnimator.SetBool("IsLaserBeam", true);
+    //    _laserSpeed = 3f;
+    //}
+
+    //public void BackShot()
+    //{
+    //    _laserAnimator.SetBool("IsBackshot", true);
+    //    MoveUp();
+    //}
+
+    public void SingleLaser()
     {
-        _laserBeamsAnimator = gameObject.GetComponent<Animator>();
-        _laserBeamsAnimator.SetBool("IsLaserBeam", true);
-        _laserSpeed = 3f;
-        MoveDown();
+        _laserAnimator.SetBool("IsBackshot", true);
     }
 
     public void FindClosestEnemy()
@@ -123,6 +157,16 @@ public class Laser : MonoBehaviour
     public void AssignAsLaserBeams()
     {
         _isLaserBeams = true;
+    }
+
+    public void AssignAsBackshot()
+    {
+        _isBackshot = true;
+    }
+
+    public void AssignAsSingleLaser()
+    {
+        _isSingleLaser = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

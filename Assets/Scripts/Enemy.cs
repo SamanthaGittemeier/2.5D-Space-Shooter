@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField]
     private float _enemySpeed = 2f;
     private float _enemyFireRate;
     private float _enemyCanFire = -1f;
@@ -40,8 +41,6 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private GameObject _enemyLaserPrefab;
-    [SerializeField]
-    private GameObject _enemyBackshotPrefab;
     [SerializeField]
     private GameObject _enemyShield;
     [SerializeField]
@@ -163,24 +162,13 @@ public class Enemy : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _enemySpeed * Time.deltaTime);
     }
 
-    public void StartAvoidance()
+    public void MoveToCenter()
     {
-        if (_isAvoiderEnemy == true)
+        transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
+        if (transform.position.x == 0 && transform.position.y == 0)
         {
-            if (_enemyMovementID == 0)
-            {
-                _enemyMovementID = Random.Range(1, 3);
-            }
-            StartCoroutine(AvoidShot());
+            _enemySpeed = 0;
         }
-    }
-
-    IEnumerator AvoidShot()
-    {
-        _enemySpeed = 3;
-        yield return new WaitForSeconds(1.5f);
-        _enemySpeed = 2;
-        _enemyMovementID = Random.Range(0, 3);
     }
 
     public void Fire()
@@ -189,11 +177,18 @@ public class Enemy : MonoBehaviour
         {
             _enemyFireRate = Random.Range(3f, 7f);
             _enemyCanFire = Time.time + _enemyFireRate;
-            GameObject _enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
-            Laser[] _lasers = _enemyLaser.GetComponentsInChildren<Laser>();
-            for (int i = 0; i < _lasers.Length; i++)
+            if (_enemyTypeID == 1 || _enemyTypeID == 2 || _enemyTypeID == 4)
             {
-                _lasers[i].AssignToEnemy();
+                GameObject _enemySingleLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+                Laser _singleLaser = _enemySingleLaser.GetComponent<Laser>();
+                _singleLaser.AssignAsSingleLaser();
+                _singleLaser.AssignToEnemy();
+            }
+            else if (_enemyTypeID == 0 || _enemyTypeID == 3)
+            {
+                GameObject _enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+                Laser _lasers = _enemyLaser.GetComponent<Laser>();
+                _lasers.AssignToEnemy();
             }
         }
     }
@@ -205,7 +200,7 @@ public class Enemy : MonoBehaviour
             _enemyFireRate = Random.Range(4f, 9f);
             _enemyCanFire = Time.time + _enemyFireRate;
             StartCoroutine(FiringBeams());
-            GameObject _enemyLaserBeams = Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            GameObject _enemyLaserBeams = Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, -1f, 0), Quaternion.identity);
             Laser[] _laserBeams = _enemyLaserBeams.GetComponentsInChildren<Laser>();
             for (int i = 0; i < _laserBeams.Length; i++)
             {
@@ -219,7 +214,12 @@ public class Enemy : MonoBehaviour
     {
         if (_allowedToFire == true && _isSmartEnemy == true)
         {
-            GameObject _enemyBackshot = Instantiate(_enemyBackshotPrefab, transform.position + new Vector3(2.3f, 2.9f, 0), Quaternion.identity);
+            GameObject _enemyBackshot = Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, -.5f, 0), Quaternion.identity);
+            Laser[] _laserBackshot = _enemyBackshot.GetComponentsInChildren<Laser>();
+            for (int i = 0; i < _laserBackshot.Length; i++)
+            {
+                _laserBackshot[i].AssignAsBackshot();
+            }
         }
     }
 
@@ -260,9 +260,29 @@ public class Enemy : MonoBehaviour
         _enemyMovementID = Random.Range(0, 3);
     }
 
+    public void StartAvoidance()
+    {
+        if (_isAvoiderEnemy == true)
+        {
+            if (_enemyMovementID == 0)
+            {
+                _enemyMovementID = Random.Range(1, 3);
+            }
+            StartCoroutine(AvoidShot());
+        }
+    }
+
+    IEnumerator AvoidShot()
+    {
+        _enemySpeed = 3;
+        yield return new WaitForSeconds(1.5f);
+        _enemySpeed = 2;
+        _enemyMovementID = Random.Range(0, 3);
+    }
+
     public void DestroyPowerup()
     {
-        if (_allowedToFire == true)
+        if (_allowedToFire == true && _enemyTypeID == 0 - 4)
         {
             GameObject _enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
             Debug.Log("Found Powerup");

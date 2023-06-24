@@ -10,6 +10,8 @@ public class AtomBombPowerup : MonoBehaviour
     private GameObject _shockwave;
     [SerializeField]
     private GameObject _powerupContainer;
+    [SerializeField]
+    private GameObject _smokeCloudPrefab;
 
     [SerializeField]
     private Animator _pickupAnimator;
@@ -57,6 +59,11 @@ public class AtomBombPowerup : MonoBehaviour
         {
             StartCoroutine(AtomBomb());
         }
+        if (collision.tag == "Enemy Laser")
+        {
+            SmokeCloud();
+            Destroy(this.gameObject);
+        }
     }
 
     IEnumerator AtomBomb()
@@ -75,6 +82,11 @@ public class AtomBombPowerup : MonoBehaviour
         Destroy(_pickup);
         Destroy(_shockwave);
         StopCoroutine(AtomBomb());
+    }
+
+    void SmokeCloud()
+    {
+        Instantiate(_smokeCloudPrefab, transform.position + new Vector3(0, -.75f, 0), Quaternion.identity);
     }
 
     void DisableEnemies()

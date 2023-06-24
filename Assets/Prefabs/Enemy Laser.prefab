@@ -54,8 +54,12 @@ MonoBehaviour:
   _angleToEnemy: 0
   _isEnemyLaser: 0
   _isHomingLaser: 0
+  _isLaserBeams: 0
+  _isBackshot: 0
+  _isSingleLaser: 0
   _player: {fileID: 0}
   _targetEnemy: {fileID: 0}
+  _laserAnimator: {fileID: 0}
 --- !u!61 &4085409791775872956
 BoxCollider2D:
   m_ObjectHideFlags: 0

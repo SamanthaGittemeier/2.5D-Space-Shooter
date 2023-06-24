@@ -138,6 +138,8 @@ MonoBehaviour:
   _toPlayerSpeed: 5
   _powerupID: 0
   _player: {fileID: 0}
+  _smokeCloudPrefab: {fileID: 4688366796816071956, guid: aadb669e025035242a17da7ab0de9ebc,
+    type: 3}
 --- !u!95 &1524880703347886789
 Animator:
   serializedVersion: 3

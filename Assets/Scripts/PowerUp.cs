@@ -14,6 +14,8 @@ public class PowerUp : MonoBehaviour
 
     [SerializeField]
     private GameObject _player;
+    [SerializeField]
+    private GameObject _smokeCloudPrefab;
 
     void Start()
     {
@@ -50,6 +52,11 @@ public class PowerUp : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _toPlayerSpeed * Time.deltaTime);
         }
+    }
+
+    void SmokeCloud()
+    {
+        Instantiate(_smokeCloudPrefab, transform.position + new Vector3(0, -.75f, -1), Quaternion.identity);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -101,6 +108,7 @@ public class PowerUp : MonoBehaviour
         }
         if (collision.tag == "Enemy Laser")
         {
+            SmokeCloud();
             Destroy(this.gameObject);
         }
     }

@@ -96,19 +96,21 @@ public class SpawnManager : MonoBehaviour
                         _waveSize = 15;
                         _enemyTypeMax = 5;
                         break;
-                    //add case for boss here
-                    //enemy id only equals boss id
-                    //wave size is 1 for boss
+                    case 5:
+                        _waveSize = 1;
+                        _enemyTypeMin = 5;
+                        _enemyTypeMax = 6;
+                        break;
                 }
                 for (int i = 0; i < _waveSize; i++)
                 {
-                    _chooseEnemyShield = Random.Range(0, 2);
-                    Debug.Log("Enemy Shield is " + _chooseEnemyShield);
                     _chooseEnemyTypeID = Random.Range(_enemyTypeMin, _enemyTypeMax);
                     Debug.Log("Enemy Type is " + _chooseEnemyTypeID);
                     GameObject newEnemy = null;
-                    if (_chooseEnemyTypeID != 1)
+                    if (_chooseEnemyTypeID == 0 || _chooseEnemyTypeID == 2 || _chooseEnemyTypeID == 3 || _chooseEnemyTypeID == 4)
                     {
+                        _chooseEnemyShield = Random.Range(0, 2);
+                        Debug.Log("Enemy Shield is " + _chooseEnemyShield);
                         _chooseEnemyMovement = Random.Range(0, 3);
                         Debug.Log("Enemy Movement Selection is " + _chooseEnemyMovement);
                         switch (_chooseEnemyMovement)
@@ -124,8 +126,10 @@ public class SpawnManager : MonoBehaviour
                                 break;
                         }
                     }
-                    else if (_chooseEnemyTypeID == 1)
+                    if (_chooseEnemyTypeID == 1)
                     {
+                        _chooseEnemyShield = Random.Range(0, 2);
+                        Debug.Log("Enemy Shield is " + _chooseEnemyShield);
                         _chooseEnemyMovement = 3;
                         Debug.Log("Random Enemy " + _chooseEnemyMovement);
                         int _randomSpawn = Random.Range(0, 2);
@@ -146,6 +150,13 @@ public class SpawnManager : MonoBehaviour
                             }
                         }
                         newEnemy.GetComponent<Enemy>().ChooseLengths();
+                    }
+                    if (_chooseEnemyTypeID == 5)
+                    {
+                        _chooseEnemyMovement = 5;
+                        Debug.Log("Boss" + _chooseEnemyMovement);
+                        _chooseEnemyShield = 0;
+                        newEnemy = Instantiate(_enemeyPrefab_SM, new Vector3(0, 10, 0), Quaternion.identity);
                     }
                     newEnemy.GetComponent<Enemy>().EnemyMovementID(_chooseEnemyMovement);
                     newEnemy.GetComponent<Enemy>().EnemyShieldChoice(_chooseEnemyShield);
