@@ -11,6 +11,10 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _powerupContainer;
     [SerializeField]
+    private GameObject _explosionsContainer;
+    [SerializeField]
+    private GameObject _bossAttackContainer;
+    [SerializeField]
     private GameObject[] _rarePowerups;
     [SerializeField]
     private GameObject[] _powerups;
@@ -44,6 +48,8 @@ public class SpawnManager : MonoBehaviour
     {
         _enemyContainer = GameObject.Find("EnemyContainer");
         _powerupContainer = GameObject.Find("PowerupContainer");
+        _explosionsContainer = GameObject.Find("ExplosionsContainer");
+        _bossAttackContainer = GameObject.Find("BossAttackContainer");
         _waveID = 0;
     }
 
@@ -233,5 +239,7 @@ public class SpawnManager : MonoBehaviour
         Destroy(_enemyContainer);
         _stopSpawningPowerups = true;
         Destroy(_powerupContainer);
+        Destroy(_explosionsContainer);
+        Destroy(_bossAttackContainer);
     }
 }

@@ -14,6 +14,10 @@ public class Enemy : MonoBehaviour
     private float _randomY;
     [SerializeField]
     private float _randomTimeLength;
+    [SerializeField]
+    private float _bossFiringTime;
+    [SerializeField]
+    private float _bossCanFire;
 
     [SerializeField]
     private int _enemyMovementID;
@@ -23,6 +27,10 @@ public class Enemy : MonoBehaviour
     private int _enemyShieldDecision;
     [SerializeField]
     private int _randomMoveChoice;
+    [SerializeField]
+    private int _bossHealth = 25;
+    [SerializeField]
+    private int _firingPatternChoice;
 
     [SerializeField]
     private bool _allowedToFire;
@@ -38,6 +46,8 @@ public class Enemy : MonoBehaviour
     private bool _isAvoiderEnemy = false;
     [SerializeField]
     private bool _isBoss = false;
+    [SerializeField]
+    private bool _bossWasDefeated = false;
 
     [SerializeField]
     private GameObject _enemyLaserPrefab;
@@ -47,6 +57,12 @@ public class Enemy : MonoBehaviour
     private GameObject _enemyExplosionPrefab;
     [SerializeField]
     private GameObject _explosionsContainer;
+    [SerializeField]
+    private GameObject _bossAttackContainer;
+    [SerializeField]
+    private GameObject _bossAttackPrefab;
+    [SerializeField]
+    private GameObject[] _activeDrones;
 
     [SerializeField]
     private Player _player;
@@ -54,14 +70,24 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Animator _colorAnimator;
 
+    [SerializeField]
+    private UIManager _uiManager;
+
+    [SerializeField]
+    private SpawnManager _spawnManager;
+
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _allowedToFire = true;
         _enemySpeed = 2f;
         _randomX = Random.Range(-9.44f, 9.48f);
         _randomY = Random.Range(4.7f, 0f);
         _explosionsContainer = GameObject.Find("ExplosionsContainer");
+        _bossAttackContainer = GameObject.Find("BossAttackContainer");
+        _bossCanFire = Random.Range(7f, 10f);
         switch (_enemyTypeID)
         {
             case 0:
@@ -70,7 +96,6 @@ public class Enemy : MonoBehaviour
             case 1:
                 _isRandomEnemy = true;
                 _colorAnimator.SetInteger("TypeID", 1);
-                FireBeams();
                 break;
             case 2:
                 _isAggressiveEnemy = true;
@@ -86,7 +111,8 @@ public class Enemy : MonoBehaviour
                 break;
             case 5:
                 _isBoss = true;
-                //call boss behavior
+                _enemyShield.SetActive(false);
+                _colorAnimator.SetInteger("TypeID", 5);
                 break;
         }
     }
@@ -94,6 +120,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Fire();
+        FireBeams();
         switch (_enemyMovementID)
         {
             case 0:
@@ -111,6 +138,14 @@ public class Enemy : MonoBehaviour
             case 4:
                 MoveTowardsPlayer();
                 break;
+            case 5:
+                MoveToCenter();
+                break;
+        }
+        _activeDrones = GameObject.FindGameObjectsWithTag("Drone");
+        if (_isBoss == true)
+        {
+            BossFire();
         }
     }
 
@@ -165,15 +200,16 @@ public class Enemy : MonoBehaviour
     public void MoveToCenter()
     {
         transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
-        if (transform.position.x == 0 && transform.position.y == 0)
+        if (transform.position.x == 0 && transform.position.y <= 2)
         {
+            transform.position = new Vector3(0, 2, 0);
             _enemySpeed = 0;
         }
     }
 
     public void Fire()
     {
-        if (Time.time > _enemyCanFire && _allowedToFire == true && _isRandomEnemy == false)
+        if (Time.time > _enemyCanFire && _allowedToFire == true && _isRandomEnemy == false && _isBoss == false)
         {
             _enemyFireRate = Random.Range(3f, 7f);
             _enemyCanFire = Time.time + _enemyFireRate;
@@ -209,6 +245,12 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    IEnumerator FiringBeams()
+    {
+        _enemySpeed = 0;
+        yield return new WaitForSeconds(1f);
+        _enemySpeed = 2f;
+    }
 
     public void FireBackshot()
     {
@@ -223,11 +265,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator FiringBeams()
+    public void BossFire()
     {
-        _enemySpeed = 0;
-        yield return new WaitForSeconds(1f);
-        _enemySpeed = 2f;
+        if (Time.time > _bossCanFire && _isBoss == true && _activeDrones.Length == 0 && transform.position.x == 0 && transform.position.y == 2)
+        {
+            _bossFiringTime = Random.Range(7f, 10f);
+            _bossCanFire = Time.time + _bossFiringTime;
+            GameObject BossAttack = Instantiate(_bossAttackPrefab, transform.position, Quaternion.identity);
+            BossAttack.transform.SetParent(_bossAttackContainer.transform);
+            _firingPatternChoice = Random.Range(0, 3);
+            Drone[] _drones = BossAttack.GetComponentsInChildren<Drone>();
+            BossAttack.transform.GetChild(0).gameObject.SetActive(true);
+            for (int i = 0; i < _drones.Length; i++)
+            {
+                _drones[i].FiringPattern(_firingPatternChoice);
+            }
+        }
     }
 
     public void ChooseLengths()
@@ -331,10 +384,15 @@ public class Enemy : MonoBehaviour
                 {
                     DeathRoutine();
                 }
-                else 
+                if (_enemyHasShield == true)
                 {
                     _enemyHasShield = false;
                     _enemyShield.SetActive(false);
+                }
+                if (_isBoss == true)
+                {
+                    _bossHealth--;
+                    DeathRoutine();
                 }
             }
         }
@@ -345,10 +403,15 @@ public class Enemy : MonoBehaviour
             {
                 DeathRoutine();
             }
-            else
+            if (_enemyHasShield == true)
             {
                 _enemyHasShield = false;
                 _enemyShield.SetActive(false);
+            }
+            if (_isBoss == true)
+            {
+                _bossHealth--;
+                DeathRoutine();
             }
         }
         if (collision.tag == "Shockwave")
@@ -357,23 +420,45 @@ public class Enemy : MonoBehaviour
             {
                 DeathRoutine();
             }
-            else
+            if (_enemyHasShield == true)
             {
                 _enemyHasShield = false;
                 _enemyShield.SetActive(false);
+            }
+            if (_isBoss == true)
+            {
+                _bossHealth -= 5;
+                DeathRoutine();
             }
         }
     }
 
     public void DeathRoutine()
     {
-        _player.KilledEnemy(10);
-        _enemySpeed = 0;
-        GameObject explosion = Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
-        explosion.transform.parent = _explosionsContainer.transform;
-        Destroy(explosion, 2.5f);
-        _allowedToFire = false;
-        Destroy(this.gameObject);
+        if (_isBoss == true && _bossHealth <= 0)
+        {
+            _player.KilledEnemy(100);
+            _player.Won();
+            GameObject explosion = Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
+            explosion.transform.parent = _explosionsContainer.transform;
+            explosion.transform.localScale = new Vector3(1.75f, 1.75f, 1.75f);
+            _bossWasDefeated = true;
+            _uiManager.IsBossDead(_bossWasDefeated);
+            _spawnManager.OnPlayerDeath();
+            Destroy(explosion, 2.5f);
+            Destroy(_bossAttackContainer);
+            Destroy(this.gameObject);
+        }
+        else if (_isBoss == false)
+        {
+            _player.KilledEnemy(10);
+            _enemySpeed = 0;
+            GameObject explosion = Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
+            explosion.transform.parent = _explosionsContainer.transform;
+            Destroy(explosion, 2.5f);
+            _allowedToFire = false;
+            Destroy(this.gameObject);
+        }
     }
 
     public void FreezeEnemy()

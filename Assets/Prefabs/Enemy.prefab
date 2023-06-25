@@ -342,13 +342,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48be8f20b6993604ea409f9c1f6da661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemySpeed: 2
   _randomX: 0
   _randomY: 0
   _randomTimeLength: 0
+  _bossFiringTime: 0
   _enemyMovementID: 0
   _enemyTypeID: 0
   _enemyShieldDecision: 0
   _randomMoveChoice: 0
+  _bossHealth: 25
+  _firingPatternChoice: 0
+  _activeDrones: 0
   _allowedToFire: 0
   _enemyHasShield: 0
   _isRandomEnemy: 0
@@ -358,12 +363,14 @@ MonoBehaviour:
   _isBoss: 0
   _enemyLaserPrefab: {fileID: 113815090639864302, guid: 3ce4dd318babba44ab9a420cbbbe3735,
     type: 3}
-  _enemyBackshotPrefab: {fileID: 312071924821206922, guid: 00672e5845032c2419e9495525c99166,
-    type: 3}
   _enemyShield: {fileID: 4621641515162409172}
   _enemyExplosionPrefab: {fileID: 245345997126315626, guid: 67e7240998c33154dac69b5364d39cce,
     type: 3}
   _explosionsContainer: {fileID: 0}
+  _bossAttackContainer: {fileID: 0}
+  _bossAttackPrefab: {fileID: 1497529045231025870, guid: b02642bc19a457f46b52de45d64657e8,
+    type: 3}
+  _currentBossAttack: {fileID: 0}
   _player: {fileID: 0}
   _colorAnimator: {fileID: 6020129619522288962}
 --- !u!212 &3279845214827254908

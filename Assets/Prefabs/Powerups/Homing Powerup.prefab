@@ -120,7 +120,7 @@ MonoBehaviour:
   _toPlayerSpeed: 5
   _powerupID: 6
   _player: {fileID: 0}
-  _smokeCloudPrefab: {fileID: 4688366796816071956, guid: aadb669e025035242a17da7ab0de9ebc,
+  _smokeCloudPrefab: {fileID: 5563554827865935012, guid: ef41443d2e74a4d4a8de833284ab05dc,
     type: 3}
 --- !u!58 &5873378440330602920
 CircleCollider2D:

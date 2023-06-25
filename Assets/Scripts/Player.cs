@@ -394,4 +394,9 @@ public class Player : MonoBehaviour
     {
         _speed = 5f;
     }
+
+    public void Won()
+    {
+        Destroy(this.gameObject);
+    }
 }

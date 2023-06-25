@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     private Text _ammoCountText;
     [SerializeField]
     private Text _maxAmmoText;
+    [SerializeField]
+    private Text _youWonText;
 
     [SerializeField]
     private Sprite[] _livesSprite;
@@ -26,6 +28,14 @@ public class UIManager : MonoBehaviour
     private GameObject _ammoCountWhite;
     [SerializeField]
     private GameObject _ammoCountRed;
+
+    [SerializeField]
+    private bool _bossDead;
+
+    [SerializeField]
+    private Button _quitButton;
+    [SerializeField]
+    private Button _playAgainButton;
 
     void Start()
     {
@@ -42,6 +52,12 @@ public class UIManager : MonoBehaviour
         _ammoCountRed = GameObject.Find("Ammo Count Red");
         _ammoCountRed.SetActive(false);
         _maxAmmoText = GameObject.Find("Max Ammo Text").GetComponent<Text>();
+        _youWonText = GameObject.Find("You Won Text").GetComponent<Text>();
+        _youWonText.gameObject.SetActive(false);
+        _quitButton = GameObject.Find("Quit Button").GetComponent<Button>();
+        _quitButton.gameObject.SetActive(false);
+        _playAgainButton = GameObject.Find("Play Again Button").GetComponent<Button>();
+        _playAgainButton.gameObject.SetActive(false);
     }
 
     public void UpdateScore(int _playerScore)
@@ -78,6 +94,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void IsBossDead(bool _bossIsDead)
+    {
+        _bossDead = _bossIsDead;
+        GameWonSequence();
+    }
+
     void GameOverSequence()
     {
         _gameOverText.gameObject.SetActive(true);
@@ -92,6 +114,25 @@ public class UIManager : MonoBehaviour
             _gameOverText.text = "GAME OVER";
             yield return new WaitForSeconds(.5f);
             _gameOverText.text = "";
+            yield return new WaitForSeconds(.5f);
+        }
+    }
+
+    void GameWonSequence()
+    {
+        _youWonText.gameObject.SetActive(true);
+        _playAgainButton.gameObject.SetActive(true);
+        _quitButton.gameObject.SetActive(true);
+        StartCoroutine(WinFlicker());
+    }
+
+    IEnumerator WinFlicker()
+    {
+        while (true)
+        {
+            _youWonText.text = "YOU WON";
+            yield return new WaitForSeconds(.5f);
+            _youWonText.text = "";
             yield return new WaitForSeconds(.5f);
         }
     }

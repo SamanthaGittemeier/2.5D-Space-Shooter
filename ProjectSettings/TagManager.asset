@@ -15,6 +15,7 @@ TagManager:
   - Atom Bomb Container
   - Powerup
   - Triple Shot
+  - Drone
   layers:
   - Default
   - TransparentFX

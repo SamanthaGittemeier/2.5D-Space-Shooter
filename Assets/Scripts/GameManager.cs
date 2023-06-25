@@ -76,4 +76,14 @@ public class GameManager : MonoBehaviour
     {
         _isGameOver = true;
     }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void QuitButton()
+    {
+        Application.Quit();
+    }
 }

@@ -56,7 +56,7 @@ public class PowerUp : MonoBehaviour
 
     void SmokeCloud()
     {
-        Instantiate(_smokeCloudPrefab, transform.position + new Vector3(0, -.75f, -1), Quaternion.identity);
+        Instantiate(_smokeCloudPrefab, transform.position, Quaternion.identity);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -107,6 +107,11 @@ public class PowerUp : MonoBehaviour
             }
         }
         if (collision.tag == "Enemy Laser")
+        {
+            SmokeCloud();
+            Destroy(this.gameObject);
+        }
+        if (collision.tag == "Drone")
         {
             SmokeCloud();
             Destroy(this.gameObject);
